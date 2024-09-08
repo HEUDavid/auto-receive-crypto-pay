@@ -28,3 +28,6 @@ go.work.sum
 /.idea
 /vendor
 go.sum
+
+# config files
+*.toml
