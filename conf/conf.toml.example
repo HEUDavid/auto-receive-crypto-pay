@@ -1,0 +1,19 @@
+[mysql_public]
+user = "your_user"
+password = "your_password"
+host = "gateway01.ap-northeast-1.prod.aws.tidbcloud.com"
+port = 4000
+dbName = "your_db"
+maxIdleConns = 10
+maxOpenConns = 100
+tls = true
+
+
+[rmq_public]
+user = "your_user"
+password = "your_password"
+host = "cougar.rmq.cloudamqp.com"
+vhost = "/psnbxfjg"
+port = 5672
+queue = "your_queue"
+
