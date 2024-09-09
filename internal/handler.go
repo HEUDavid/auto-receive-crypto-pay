@@ -1,7 +1,11 @@
 package internal
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
+	"github.com/HEUDavid/auto-receive-crypto-pay/internal/parser"
+	"github.com/HEUDavid/auto-receive-crypto-pay/model"
 	. "github.com/HEUDavid/go-fsm/pkg/metadata"
 	"log"
 )
@@ -36,7 +40,36 @@ func hookHandler(task *Task[*ReceiptData]) error {
 	log.Printf("[FSM] State: %s, Task.Data: %s", task.State, _pretty(task.GetData()))
 	task.Data.Comment = "webhook payload"
 	// 检查数据，然后根据合法收据建立新的任务
-	// ...
+	//log.Println(_pretty((*task.GetData()).RawData))
+
+	var rawData parser.WebhookData
+	if err := json.Unmarshal((*task.GetData()).RawData, &rawData); err != nil {
+		fmt.Println("json.Unmarshal error: ", err)
+	}
+
+	for _, a := range rawData.Event.Activity {
+		if !contains(PaymentAddress, a.ToAddress) {
+			continue
+		}
+
+		logicTask := GenTaskInstance(a.Hash, "", &ReceiptData{Data: model.Data{
+			Hash:            a.Hash,
+			FromAddress:     a.FromAddress,
+			ToAddress:       a.ToAddress,
+			Asset:           a.Asset,
+			Value:           a.Value,
+			RawData:         (*task.GetData()).RawData,
+			TransactionTime: task.Data.TransactionTime,
+		}})
+		logicTask.Type = "Logic"
+		logicTask.State = New.GetName()
+		if err := Adapter.Create(context.TODO(), logicTask); err != nil {
+			log.Printf("[FSM] Create logic task error: %s", err)
+			return err
+		}
+
+	}
+
 	task.State = Processed.GetName()
 	return nil
 }
@@ -63,4 +96,17 @@ func genTokenHandler(task *Task[*ReceiptData]) error {
 func _pretty(v interface{}) string {
 	s, _ := json.MarshalIndent(v, "", "  ")
 	return string(s)
+}
+
+func contains(slice []string, item string) bool {
+	for _, element := range slice {
+		if element == item {
+			return true
+		}
+	}
+	return false
+}
+
+var PaymentAddress = []string{
+	"0x7853b3736edba9d7ce681f2a90264307694f97f2",
 }
