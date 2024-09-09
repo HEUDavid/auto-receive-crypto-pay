@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	. "github.com/HEUDavid/auto-receive-crypto-pay/internal"
 	"github.com/HEUDavid/auto-receive-crypto-pay/model"
 	. "github.com/HEUDavid/go-fsm/pkg/metadata"
@@ -15,7 +14,7 @@ func Webhook(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 
 	body, err := io.ReadAll(c.Request.Body)
-	fmt.Printf("webhook payload: %s, %v\n", body, err)
+	//fmt.Printf("webhook payload: %s, %v\n", body, err)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 		return
