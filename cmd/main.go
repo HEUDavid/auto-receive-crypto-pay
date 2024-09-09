@@ -11,19 +11,6 @@ import (
 	"net/http"
 )
 
-var PaymentAddress = []string{
-	"0x7853b3736edba9d7ce681f2a90264307694f97f2",
-}
-
-func contains(slice []string, item string) bool {
-	for _, element := range slice {
-		if element == item {
-			return true
-		}
-	}
-	return false
-}
-
 func Webhook(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 
@@ -39,7 +26,7 @@ func Webhook(c *gin.Context) {
 	}
 
 	task := GenTaskInstance(Adapter.GenID(), "", &ReceiptData{Data: model.Data{RawData: body}})
-	task.Type = c.Query("Persist")
+	task.Type = "Persist"
 	task.State = Hook.GetName()
 
 	_response(c, Adapter.Create(c, task), task)
