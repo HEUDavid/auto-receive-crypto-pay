@@ -29,5 +29,6 @@ go.work.sum
 /vendor
 go.sum
 
-# config files
+# other files
 *.toml
+*.log
