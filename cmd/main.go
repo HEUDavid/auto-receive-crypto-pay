@@ -8,13 +8,14 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
 func Webhook(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 
 	body, err := io.ReadAll(c.Request.Body)
-	//fmt.Printf("webhook payload: %s, %v\n", body, err)
+	log.Printf("webhook payload: %s, %v\n", body, err)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 		return
@@ -45,17 +46,26 @@ func _response(c *gin.Context, err error, task interface{}) {
 }
 
 func init() {
+	f, _ := os.Create("log/water.log")
+	mw := io.MultiWriter(os.Stdout, f)
+	gin.DefaultWriter = mw
+	gin.DefaultErrorWriter = mw
+	log.SetOutput(gin.DefaultWriter)
+	log.Println("init log..")
+
 	InitWorker()
 	InitAdapter()
 }
 
 func main() {
-	Worker.Run()
-	log.Println("[FSM] Worker started...")
 
 	gin.SetMode(gin.DebugMode)
 	r := gin.Default()
 	r.POST("/webhook", Webhook)
 	r.GET("/query", Query)
+
+	Worker.Run()
+	log.Println("[FSM] Worker started...")
+
 	_ = r.Run("127.0.0.1:8080")
 }
