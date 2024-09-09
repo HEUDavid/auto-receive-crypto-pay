@@ -27,7 +27,7 @@ func (m *Data) TableName() string {
 // Task 任务主表，必须，维护状态驱动执行
 type Task struct {
 	ID         string    `gorm:"primaryKey;column:id;type:char(32);not null"`
-	RequestID  string    `gorm:"unique;column:request_id;type:char(32);not null;comment:'初始请求ID'"`       // 初始请求ID
+	RequestID  string    `gorm:"unique;column:request_id;type:char(128);not null;comment:'初始请求ID'"`      // 初始请求ID
 	Type       string    `gorm:"column:type;type:varchar(128);not null;comment:'业务类型'"`                  // 业务类型
 	State      string    `gorm:"index:idx_state;column:state;type:varchar(128);not null;comment:'任务状态'"` // 任务状态
 	Version    uint      `gorm:"column:version;type:int unsigned;not null;default:1"`
@@ -43,7 +43,7 @@ func (m *Task) TableName() string {
 // UniqueRequest 防重表，必须，创建更新操作对成功幂等
 type UniqueRequest struct {
 	ID         uint64    `gorm:"autoIncrement:true;primaryKey;column:id;type:bigint unsigned;not null"`
-	RequestID  string    `gorm:"unique;column:request_id;type:char(32);not null;comment:'对成功幂等'"` // 对成功幂等
+	RequestID  string    `gorm:"unique;column:request_id;type:char(128);not null;comment:'对成功幂等'"` // 对成功幂等
 	TaskID     string    `gorm:"column:task_id;type:char(32);not null"`
 	CreateTime time.Time `gorm:"column:create_time;type:timestamp;not null;default:CURRENT_TIMESTAMP"`
 }
