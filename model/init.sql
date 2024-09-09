@@ -3,7 +3,7 @@ create table unique_request
 (
     id          bigint unsigned auto_increment
         primary key,
-    request_id  char(32)                            not null comment '对成功幂等',
+    request_id  char(128)                           not null comment '对成功幂等',
     task_id     char(32)                            not null,
     create_time timestamp default CURRENT_TIMESTAMP not null,
     constraint uq_request_id
@@ -16,7 +16,7 @@ create table task
 (
     id          char(32)                               not null
         primary key,
-    request_id  char(32)                               not null comment '初始请求ID',
+    request_id  char(128)                              not null comment '初始请求ID',
     type        varchar(128)                           not null comment '业务类型',
     state       varchar(128)                           not null comment '任务状态',
     version     int unsigned default 1                 not null,
