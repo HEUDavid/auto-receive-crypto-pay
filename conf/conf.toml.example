@@ -6,7 +6,7 @@ port = 4000
 dbName = "your_db"
 maxIdleConns = 10
 maxOpenConns = 100
-tls = true
+tls = false
 
 
 [rmq_public]
