@@ -22,14 +22,14 @@ body {
 }
 
 .list-container h1 {
-    font-size: 36pt;
+    font-size: 22pt;
     text-align: center;
     font-weight: 500;
     margin-top: 15px
 }
 
 .list-container h2 {
-    font-size: 16pt;
+    font-size: 14pt;
     text-align: left;
     font-weight: 400;
     margin-bottom: 5px;
@@ -123,11 +123,11 @@ body {
     }
 
     .list-container h1 {
-        font-size: 24pt
+        font-size: 16pt
     }
 
     .list-container h2 {
-        font-size: 14pt
+        font-size: 13pt
     }
 
     .list {
