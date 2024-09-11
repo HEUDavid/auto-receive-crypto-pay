@@ -51,15 +51,14 @@ func init() {
 	gin.DefaultWriter = mw
 	gin.DefaultErrorWriter = mw
 	log.SetOutput(gin.DefaultWriter)
-	log.Println("init log..")
 
 	InitWorker()
 	InitAdapter()
 }
 
 func main() {
-
 	gin.SetMode(gin.DebugMode)
+
 	r := gin.Default()
 	r.POST("/webhook", Webhook)
 	r.GET("/query", Query)
