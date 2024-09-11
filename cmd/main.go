@@ -92,7 +92,8 @@ func main() {
 	r.Static("/src", fmt.Sprintf("%s/static/src", root))
 	r.LoadHTMLGlob(fmt.Sprintf("%s/static/templates/*", root))
 
-	r.GET("/", Index)
+	// 支付与查询
+	r.GET("/pay", Index)
 
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
