@@ -38,6 +38,8 @@ create table data
         primary key,
     task_id          char(32)                                  not null,
     token            varchar(64)     default ''                not null,
+    valid_from       bigint unsigned default 0                 not null,
+    valid_to         bigint unsigned default 0                 not null,
     hash             varchar(128)    default ''                not null,
     from_address     varchar(128)    default ''                not null,
     to_address       varchar(128)    default ''                not null,
