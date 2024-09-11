@@ -11,9 +11,12 @@ import (
 )
 
 var (
+	// Hook 监听地址活动，收到 node services 回调, 节点服务参考：https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services
+	// Processed 回调请求落库之后，执行自定义逻辑
 	Hook      = GenState("Hook", false, hookHandler)
 	Processed = State[*ReceiptData]{Name: "Processed", IsFinal: true, Handler: nil}
 
+	// New 以"发送地址FromAddress"为键，启动自定义执行流程
 	New      = GenState("New", false, newHandler)
 	GenToken = GenState("GenToken", false, genTokenHandler)
 	End      = State[*ReceiptData]{Name: "End", IsFinal: true, Handler: nil}
@@ -40,7 +43,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 	log.Printf("[FSM] State: %s, Task.Data: %s", task.State, _pretty(task.GetData()))
 	task.Data.Comment = "webhook payload"
 	// 检查数据，然后根据合法收据建立新的任务
-	//log.Println(_pretty((*task.GetData()).RawData))
+	// log.Println(_pretty((*task.GetData()).RawData))
 
 	var rawData parser.WebhookData
 	if err := json.Unmarshal((*task.GetData()).RawData, &rawData); err != nil {
@@ -70,7 +73,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 
 	}
 
-	task.State = Processed.GetName()
+	task.State = Processed.GetName() // 标记为已处理
 	return nil
 }
 

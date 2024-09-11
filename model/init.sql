@@ -37,6 +37,7 @@ create table data
     id               bigint unsigned auto_increment
         primary key,
     task_id          char(32)                                  not null,
+    token            varchar(64)     default ''                not null,
     hash             varchar(128)    default ''                not null,
     from_address     varchar(128)    default ''                not null,
     to_address       varchar(128)    default ''                not null,
