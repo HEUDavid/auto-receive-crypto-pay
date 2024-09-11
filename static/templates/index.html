@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mdavid.cn</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div class="area">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+<div class="list-container">
+    <h1>mDavid.cn</h1>
+    <h2>Payment Address</h2>
+    <ul class="list" id="fileList">
+        {{ range $network, $addresses := .adminAddresses }}
+        <li>
+            <span class="circle"></span>
+            <a target="_blank" href="/data/hello.html">
+                <span class="network">{{ $network }}</span>:
+                {{ range $index, $address := $addresses }}
+                {{ $address }}
+                {{ end }}
+            </a>
+        </li>
+        {{ end }}
+    </ul>
+</div>
+
+<div class="footer">
+    <a href="https://mdavid.cn" target="_self">&copy; 2017 -
+        <script type="text/javascript">const d = new Date();
+        document.write(d.getFullYear())</script>
+        MDAVID.CN</a>
+</div>
+</body>
+</html>
