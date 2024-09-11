@@ -64,6 +64,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 		}
 
 		logicTask := GenTaskInstance(a.Hash, "", &ReceiptData{Data: model.Data{
+			Network:         rawData.Event.Network,
 			Hash:            a.Hash,
 			FromAddress:     a.FromAddress,
 			ToAddress:       a.ToAddress,
