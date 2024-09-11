@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	. "github.com/HEUDavid/auto-receive-crypto-pay/internal"
 	"github.com/HEUDavid/auto-receive-crypto-pay/model"
 	. "github.com/HEUDavid/go-fsm/pkg/metadata"
+	"github.com/HEUDavid/go-fsm/pkg/util"
 	"github.com/gin-gonic/gin"
 	"io"
 	"log"
@@ -58,6 +60,12 @@ func _response(c *gin.Context, err error, task interface{}) {
 	}
 }
 
+func Index(c *gin.Context) {
+	c.HTML(200, "index.html", gin.H{
+		"adminAddresses": GetConfig().AdminAddress,
+	})
+}
+
 func init() {
 	gin.SetMode(GetConfig().Global.Mode)
 
@@ -76,6 +84,12 @@ func main() {
 	r.POST("/webhook", Webhook)
 	r.GET("/query", Query)
 	r.GET("/query_token", QueryToken)
+
+	root := util.FindProjectRoot()
+	r.Static("/src", fmt.Sprintf("%s/static/src", root))
+	r.LoadHTMLGlob(fmt.Sprintf("%s/static/templates/*", root))
+
+	r.GET("/", Index)
 
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
