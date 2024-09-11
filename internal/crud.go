@@ -1,11 +1,11 @@
 package internal
 
 import (
-	. "context"
+	"context"
 	"gorm.io/gorm"
 )
 
-func GetToken(c Context, db *gorm.DB, fromAddress string) (*ReceiptData, error) {
+func GetToken(c context.Context, db *gorm.DB, fromAddress string) (*ReceiptData, error) {
 	data := &ReceiptData{}
 	if err := db.Table(data.TableName()).Select("token, valid_from, valid_to").
 		Where("from_address = ?", fromAddress).Find(data).Error; err != nil {
