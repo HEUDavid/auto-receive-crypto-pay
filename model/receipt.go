@@ -9,6 +9,7 @@ import (
 type Data struct {
 	ID              uint64         `gorm:"autoIncrement:true;primaryKey;column:id;type:bigint unsigned;not null"`
 	TaskID          string         `gorm:"index:idx_task_id;column:task_id;type:char(32);not null"`
+	Token           string         `gorm:"column:token;type:varchar(64);not null;default:''"`
 	Hash            string         `gorm:"column:hash;type:varchar(128);not null;default:''"`
 	FromAddress     string         `gorm:"column:from_address;type:varchar(128);not null;default:''"`
 	ToAddress       string         `gorm:"column:to_address;type:varchar(128);not null;default:''"`
