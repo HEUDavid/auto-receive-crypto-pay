@@ -4,7 +4,7 @@ logPath = "log/water.log"
 addr = "127.0.0.1:8080"
 # 收款地址
 adminAddress = [
-    "0x7853b3736edba9d7ce681f2a90264307694f97f2",
+    "0x950a4e3beb32d3862272592c8bae79fb5f3475db",
 ]
 
 [mysql]
