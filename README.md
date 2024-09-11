@@ -8,8 +8,7 @@
 接口先对回调请求落库，检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送产品卡密等）。
 
 
-![ReceiptFSM](https://github.com/HEUDavid/auto-receive-crypto-pay/blob/main/docs/assets/receipt.svg?raw=true)
-
+![ReceiptFSM](./docs/assets/receipt.png)
 
 ## 特点
 - 完全地点对点收款，无传统的中间平台
