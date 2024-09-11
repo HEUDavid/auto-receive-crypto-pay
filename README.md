@@ -1,5 +1,6 @@
 <h1 align="center">Auto Receive Crypto Pay</h1>
 <h4 align="center">加密货币收款服务，直接的点对点接收，到账后自动执行动作，安全自由，自托管。</h4>
+<img src="https://github.com/HEUDavid/auto-receive-crypto-pay/blob/main/docs/assets/receipt.svg?raw=true" alt="ReceiptFSM"/>
 
 
 ## 简介
@@ -7,7 +8,6 @@
 当 `入账地址ToAddress` 收到加密货币后， `node services` 回调 `https://your_domain/webhook` 接口，
 接口先对回调请求落库，检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送产品卡密等）。
 
-<img src="https://github.com/HEUDavid/auto-receive-crypto-pay/blob/main/docs/assets/receipt.svg?raw=true" alt="ReceiptFSM"/>
 
 ## 特点
 - 完全地点对点收款，无传统的中间平台
