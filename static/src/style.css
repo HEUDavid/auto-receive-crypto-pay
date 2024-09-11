@@ -47,7 +47,7 @@ body {
 .list li {
     font-size: 16px;
     font-family: monospace;
-    padding: 4px 15px 4px 15px;
+    padding: 6px 15px 6px 15px;
     border-radius: 4px;
     font-weight: 300;
     display: flex;
