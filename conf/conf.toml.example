@@ -1,11 +1,11 @@
 [global]
+mode = "debug"
 logPath = "log/water.log"
 addr = "127.0.0.1:8080"
 # 收款地址
 adminAddress = [
     "0x7853b3736edba9d7ce681f2a90264307694f97f2",
 ]
-
 
 [mysql_public]
 user = "your_user"
