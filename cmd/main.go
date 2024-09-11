@@ -37,6 +37,11 @@ func Query(c *gin.Context) {
 	_response(c, Adapter.Query(c, task), task)
 }
 
+func QueryToken(c *gin.Context) {
+	data, err := GetToken(c, Adapter.GetDB(), c.Query("from_address"))
+	_response(c, err, data)
+}
+
 func _response(c *gin.Context, err error, task interface{}) {
 	if err == nil {
 		c.JSON(http.StatusOK, task)
@@ -62,6 +67,7 @@ func main() {
 	r := gin.Default()
 	r.POST("/webhook", Webhook)
 	r.GET("/query", Query)
+	r.GET("/query_token", QueryToken)
 
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
