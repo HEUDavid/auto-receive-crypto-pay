@@ -33,3 +33,4 @@ go.sum
 *.toml
 *.log
 *.sh
+main
