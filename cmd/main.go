@@ -59,7 +59,7 @@ func _response(c *gin.Context, err error, task interface{}) {
 }
 
 func init() {
-	f, _ := os.Create("log/water.log")
+	f, _ := os.Create(GetConfig().Global.LogPath)
 	mw := io.MultiWriter(os.Stdout, f)
 	gin.DefaultWriter = mw
 	gin.DefaultErrorWriter = mw
@@ -80,5 +80,5 @@ func main() {
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
 
-	_ = r.Run("127.0.0.1:8080")
+	_ = r.Run(GetConfig().Global.Addr)
 }
