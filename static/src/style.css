@@ -76,7 +76,7 @@ body {
 .list li .network {
     width: 8em;
     display: inline-block;
-    color: black;
+    color: #494277;
 }
 
 .list li .circle::before {
