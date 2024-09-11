@@ -59,8 +59,8 @@ body {
 }
 
 .list li:hover {
-    background: #5c7fed;
-    color: #fff
+    /*background: #5c7fed;*/
+    /*color: #fff*/
 }
 
 .list li:hover .circle {
@@ -74,6 +74,11 @@ body {
     color: #6ecc8b
 }
 
+form {
+    font-size: 12px;
+    font-family: monospace;
+}
+
 .network {
     width: 8em;
     display: inline-block;
@@ -82,14 +87,11 @@ body {
 
 .input_address {
     min-width: 308px;
-    font-size: 12px;
-    font-family: monospace;
+
 }
 
 .query_button {
     color: #494277;
-    font-size: 12px;
-    font-family: monospace;
 }
 
 .list li .circle::before {
@@ -140,7 +142,7 @@ body {
     }
 
     .list-container h2 {
-        font-size: 13pt
+        font-size: 14pt
     }
 
     .list {
@@ -159,6 +161,10 @@ body {
     }
 
     .list li a {
+        font-size: 0.82em
+    }
+
+    form {
         font-size: 0.82em
     }
 
