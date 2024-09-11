@@ -1,11 +1,11 @@
 <h1 align="center">Auto Receive Crypto Pay</h1>
-<h4 align="center">加密货币收款服务，直接的点对点接收，到账后自动执行动作，安全自由，自托管。</h4>
+<h4 align="center">加密货币收款服务，直接的点对点接收，到账后自动执行动作，自托管。</h4>
 
 
 ## 简介
 通过[流行的节点服务](https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services)监听地址转账活动，
-当 `入账地址ToAddress` 收到加密货币后， `node services` 回调 `https://your_domain/webhook` 接口，
-接口先对回调请求落库，检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送产品卡密等）。
+当 `入账地址ToAddress` 收到加密货币后， `Node Services` 回调 `https://your_domain/webhook` 接口，
+先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送产品卡密等）。
 <img src="./docs/assets/receipt.jpg" alt="ReceiptFSM" width="600"/>
 
 ## 特点
