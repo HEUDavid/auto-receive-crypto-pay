@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mdavid.cn</title>
-    <link rel="stylesheet" href="src/style.css">
+    <title>Auto Receive Crypto Pay</title>
+    <link rel="stylesheet" href="{{  .hostRoot  }}/src/style.css">
 </head>
 <body>
 <div class="area">
@@ -44,14 +44,13 @@
     <ul class="list" id="fileList">
         <li>
             <span class="circle"></span>
-            <form action="/query_token" method="GET">
+            <form action="{{  .hostRoot  }}/query_token" method="GET">
                 <label for="from_address" class="network">YOUR ADDRESS</label>:
                 <input type="text" id="from_address" name="from_address" placeholder="0x..." class="input_address">
                 <input type="submit" value="Query" class="query_button">
             </form>
         </li>
     </ul>
-
 </div>
 
 <div class="footer">
