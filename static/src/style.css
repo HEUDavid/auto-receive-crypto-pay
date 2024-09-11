@@ -73,6 +73,12 @@ body {
     color: #6ecc8b
 }
 
+.list li .network {
+    width: 8em;
+    display: inline-block;
+    color: black;
+}
+
 .list li .circle::before {
     content: "•";
     vertical-align: middle
