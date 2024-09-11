@@ -47,6 +47,7 @@ bash -c 'curl -s "$1" | python -m json.tool' \
 mode = "debug"
 logPath = "log/water.log"
 addr = "127.0.0.1:8080"
+hostRoot = "/gin"  # ""或"/abc"
 
 [adminAddress]  # 收款地址: 网络类型与收款地址列表
 MATIC_MAINNET = [
