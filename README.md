@@ -5,11 +5,11 @@
 ## 简介
 通过[流行的节点服务](https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services)监听地址转账活动，
 当 `入账地址ToAddress` 收到加密货币后， `node services` 回调 `https://your_domain/webhook` 接口，
-接口先对回调请求落库，然后进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关token，产生卡密等）。
+接口先对回调请求落库，然后进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送产品卡密等）。
 
 ## 特点
-- 完全地点对点收款，无中间平台
-- 无需KYC
+- 完全地点对点收款，无传统的中间平台
+- 无需KYC，无需用户注册
 - 无中介(只是依赖节点服务商推送，自接入区块链要求较高，成本也比较高，不推荐)
 - 无费用(除网络费用)
 - 开源，自托管，完全控制
@@ -39,12 +39,13 @@ curl -X POST http://localhost:8080/webhook \
 }
 ```
 
+## 配置文件
 ```toml
 [global]
 mode = "debug"
 logPath = "log/water.log"
 addr = "127.0.0.1:8080"
-# 收款地址
+# 您的收款地址，可配置多个
 adminAddress = [
     "0x7853b3736edba9d7ce681f2a90264307694f97f2",
 ]
@@ -68,13 +69,21 @@ port = 5672
 queue = "your_queue"
 ```
 
-
 ## 开发中
 - 前端页面
 - Docker快速部署
 
-## 从头构建
-假设你已经安装了 Go，那么你可以打开命令行界面，执行如下命令：
+## 二次开发
+- 拓展能力：核心逻辑定义 fsm 状态机，并实现状态处理器
+- 嵌入到当前业务系统：二次开发接入到您的订阅服务或者电子商务网站中，为网站支持接收加密货币付款渠道，简要流程如下：
+  - 1. 用户在您的网站注册，并绑定用户的支付地址
+  - 2. 展示管理员支付信息(收款地址、网络、币种)
+  - 3. 用户自行发起转账动作
+  - 4. 转账成功，`Auto Receive Crypto Pay` 接到 `node services` 回调，为 `发送地址FromAddress` 执行逻辑(生成订阅token，为用户发送卡密商品等)
+
+
+## 从源码构建与运行
+假设您已经安装了 Go，那么你可以打开命令行界面，执行如下命令：
 ```shell
 git clone https://github.com/HEUDavid/auto-receive-crypto-pay.git
 cd auto-receive-crypto-pay
