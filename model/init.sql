@@ -1,6 +1,6 @@
--- drop database receipt;
--- create database receipt;
--- use receipt;
+drop database receipt;
+create database receipt;
+use receipt;
 
 DROP TABLE IF EXISTS `unique_request`;
 create table unique_request
@@ -44,6 +44,7 @@ create table data
     token            varchar(64)     default ''                not null,
     valid_from       bigint unsigned default 0                 not null,
     valid_to         bigint unsigned default 0                 not null,
+    network          varchar(16)     default ''                not null,
     hash             varchar(128)    default ''                not null,
     from_address     varchar(128)    default ''                not null,
     to_address       varchar(128)    default ''                not null,
@@ -57,3 +58,6 @@ create table data
 
 create index idx_task_id
     on data (task_id);
+
+create index idx_from_address
+    on data (from_address);

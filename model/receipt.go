@@ -12,8 +12,9 @@ type Data struct {
 	Token           string         `gorm:"column:token;type:varchar(64);not null;default:''"`
 	ValidFrom       uint64         `gorm:"column:valid_from;type:bigint unsigned;not null;default:0"`
 	ValidTo         uint64         `gorm:"column:valid_to;type:bigint unsigned;not null;default:0"`
+	Network         string         `gorm:"column:network;type:varchar(16);not null;default:''"`
 	Hash            string         `gorm:"column:hash;type:varchar(128);not null;default:''"`
-	FromAddress     string         `gorm:"column:from_address;type:varchar(128);not null;default:''"`
+	FromAddress     string         `gorm:"index:idx_from_address;column:from_address;type:varchar(128);not null;default:''"`
 	ToAddress       string         `gorm:"column:to_address;type:varchar(128);not null;default:''"`
 	Asset           string         `gorm:"column:asset;type:varchar(32);not null;default:''"`
 	Value           float64        `gorm:"column:value;type:decimal(50,15);not null;default:0.000000000000000"`
