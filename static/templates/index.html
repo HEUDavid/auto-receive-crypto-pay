@@ -24,7 +24,7 @@
 
 <div class="list-container">
     <h1>Auto Receive Crypto Pay</h1>
-    <h2>Payment Address</h2>
+    <h2>Receiving Address</h2>
     <ul class="list" id="fileList">
         {{ range $network, $addresses := .adminAddresses }}
         <li>
@@ -38,6 +38,19 @@
         </li>
         {{ end }}
     </ul>
+
+    <h2>Query Token</h2>
+    <ul class="list" id="fileList">
+        <li>
+            <span class="circle"></span>
+            <form action="/query_token" method="GET">
+                <label for="from_address" class="network">YOUR ADDRESS</label>:
+                <input type="text" id="from_address" name="from_address" placeholder="0x..." class="input_address">
+                <input type="submit" value="Query" class="query_button">
+            </form>
+        </li>
+    </ul>
+
 </div>
 
 <div class="footer">
