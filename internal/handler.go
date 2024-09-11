@@ -8,6 +8,7 @@ import (
 	"github.com/HEUDavid/auto-receive-crypto-pay/model"
 	. "github.com/HEUDavid/go-fsm/pkg/metadata"
 	"log"
+	"time"
 )
 
 var (
@@ -51,7 +52,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 	}
 
 	for _, a := range rawData.Event.Activity {
-		if !contains(PaymentAddress, a.ToAddress) {
+		if !contains(AdministratorAddress, a.ToAddress) {
 			continue
 		}
 
@@ -89,6 +90,13 @@ func genTokenHandler(task *Task[*ReceiptData]) error {
 
 	// Invoke RPC interfaces to perform certain operations.
 	// 生成卡密或者发送商品之类的
+	task.Data.Token = Worker.GenID()
+
+	currentTime := time.Now()
+	timeAfter30Days := currentTime.AddDate(0, 0, 30)
+	task.Data.ValidFrom = uint64(currentTime.Unix())
+	task.Data.ValidTo = uint64(timeAfter30Days.Unix())
+
 	log.Println("send mail...")
 	task.Data.Comment = "send mail success"
 
@@ -110,6 +118,6 @@ func contains(slice []string, item string) bool {
 	return false
 }
 
-var PaymentAddress = []string{
+var AdministratorAddress = []string{
 	"0x7853b3736edba9d7ce681f2a90264307694f97f2",
 }
