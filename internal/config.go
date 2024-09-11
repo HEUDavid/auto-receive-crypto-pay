@@ -17,10 +17,13 @@ type Global struct {
 	AdminAddress []string `toml:"adminAddress"`
 }
 
-func GetConfig() Config {
-	var config Config
-	if _, err := toml.DecodeFile(filepath.Join(util.FindProjectRoot(), "conf", "conf.toml"), &config); err != nil {
-		log.Fatalf("Failed to load config: %v", err)
+var config *Config
+
+func GetConfig() *Config {
+	if config == nil {
+		if _, err := toml.DecodeFile(filepath.Join(util.FindProjectRoot(), "conf", "conf.toml"), &config); err != nil {
+			log.Fatalf("Failed to load config: %v", err)
+		}
 	}
 	return config
 }
