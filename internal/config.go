@@ -8,16 +8,16 @@ import (
 )
 
 type Config struct {
-	Global GlobalConfig `toml:"global"`
+	Global Global `toml:"global"`
 }
 
-type GlobalConfig struct {
-	LogPath string   `toml:"logPath"`
-	Addr    string   `toml:"addr"`
-	List    []string `toml:"list"`
+type Global struct {
+	LogPath      string   `toml:"logPath"`
+	Addr         string   `toml:"addr"`
+	AdminAddress []string `toml:"adminAddress"`
 }
 
-func GetGlobalConfig() Config {
+func GetConfig() Config {
 	var config Config
 	if _, err := toml.DecodeFile(filepath.Join(util.FindProjectRoot(), "conf", "conf.toml"), &config); err != nil {
 		log.Fatalf("Failed to load config: %v", err)
