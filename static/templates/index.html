@@ -29,10 +29,12 @@
         {{ range $network, $addresses := .adminAddresses }}
         <li>
             <span class="circle"></span>
-            <span class="network">{{ $network }}</span>:
-            {{ range $index, $address := $addresses }}
-            {{ $address }}
-            {{ end }}
+            <a>
+                <span class="network">{{ $network }}</span>:
+                {{ range $index, $address := $addresses }}
+                {{ $address }}
+                {{ end }}
+            </a>
         </li>
         {{ end }}
     </ul>
