@@ -59,7 +59,7 @@ func _response(c *gin.Context, err error, task interface{}) {
 }
 
 func init() {
-	gin.SetMode(gin.DebugMode)
+	gin.SetMode(GetConfig().Global.Mode)
 
 	f, _ := os.Create(GetConfig().Global.LogPath)
 	mw := io.MultiWriter(os.Stdout, f)
