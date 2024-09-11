@@ -1,3 +1,6 @@
+drop database receipt;
+create database receipt;
+
 DROP TABLE IF EXISTS `unique_request`;
 create table unique_request
 (
