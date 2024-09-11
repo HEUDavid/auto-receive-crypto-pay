@@ -81,7 +81,7 @@ queue = "your_queue"
     1. 用户在您的网站注册，并绑定用户的支付地址
     2. 展示管理员支付信息(收款地址、网络、币种)
     3. 用户自行发起转账动作
-    4. 转账成功，`Auto Receive Crypto Pay` 接到 `node services` 回调，为 `发送地址FromAddress` 执行逻辑(生成订阅token，为用户发送卡密商品等)
+    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成订阅token，为用户发送卡密商品等)
 
 
 ## 从源码构建与运行
