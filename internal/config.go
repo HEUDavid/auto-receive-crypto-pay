@@ -12,6 +12,7 @@ type Config struct {
 }
 
 type Global struct {
+	mode         string   `toml:"mode"`
 	LogPath      string   `toml:"logPath"`
 	Addr         string   `toml:"addr"`
 	AdminAddress []string `toml:"adminAddress"`
