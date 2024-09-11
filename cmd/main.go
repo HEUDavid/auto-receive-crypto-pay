@@ -11,6 +11,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func Webhook(c *gin.Context) {
@@ -42,13 +43,15 @@ func Query(c *gin.Context) {
 func QueryToken(c *gin.Context) {
 	data, err := GetToken(c, Adapter.GetDB(), c.Query("from_address"))
 	_response(c, err, struct {
-		Token     string
-		ValidFrom uint64
-		ValidTo   uint64
+		FromAddress string
+		Token       string
+		ValidFrom   time.Time
+		ValidTo     time.Time
 	}{
+		c.Query("from_address"),
 		data.Token,
-		data.ValidFrom,
-		data.ValidTo,
+		time.Unix(int64(data.ValidFrom), 0),
+		time.Unix(int64(data.ValidTo), 0),
 	})
 }
 
