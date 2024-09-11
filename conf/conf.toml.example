@@ -7,7 +7,7 @@ adminAddress = [
     "0x7853b3736edba9d7ce681f2a90264307694f97f2",
 ]
 
-[mysql_public]
+[mysql]
 user = "your_user"
 password = "your_password"
 host = "gateway01.ap-northeast-1.prod.aws.tidbcloud.com"
@@ -17,12 +17,10 @@ maxIdleConns = 10
 maxOpenConns = 100
 tls = true
 
-
-[rmq_public]
+[rmq]
 user = "your_user"
 password = "your_password"
 host = "cougar.rmq.cloudamqp.com"
 vhost = "/psnbxfjg"
 port = 5672
 queue = "your_queue"
-
