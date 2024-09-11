@@ -52,7 +52,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 	}
 
 	for _, a := range rawData.Event.Activity {
-		if !contains(AdminAddress, a.ToAddress) {
+		if !contains(GetConfig().Global.AdminAddress, a.ToAddress) {
 			continue
 		}
 
@@ -116,8 +116,4 @@ func contains(slice []string, item string) bool {
 		}
 	}
 	return false
-}
-
-var AdminAddress = []string{
-	"0x7853b3736edba9d7ce681f2a90264307694f97f2",
 }
