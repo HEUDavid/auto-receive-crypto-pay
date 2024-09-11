@@ -32,3 +32,4 @@ go.sum
 # other files
 *.toml
 *.log
+*.sh
