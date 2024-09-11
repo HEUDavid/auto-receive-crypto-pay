@@ -59,6 +59,8 @@ func _response(c *gin.Context, err error, task interface{}) {
 }
 
 func init() {
+	gin.SetMode(gin.DebugMode)
+
 	f, _ := os.Create(GetConfig().Global.LogPath)
 	mw := io.MultiWriter(os.Stdout, f)
 	gin.DefaultWriter = mw
@@ -70,8 +72,6 @@ func init() {
 }
 
 func main() {
-	gin.SetMode(gin.DebugMode)
-
 	r := gin.Default()
 	r.POST("/webhook", Webhook)
 	r.GET("/query", Query)
