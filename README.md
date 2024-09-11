@@ -70,11 +70,6 @@ port = 5672
 queue = "your_queue"
 ```
 
-## 建设中
-- 前端页面
-- Docker快速部署
-- Step by Step 文档
-
 ## 二次开发
 - 我想拓展一些能力：核心逻辑定义 fsm 状态机，增加对应节点及其状态处理器
 - 我想嵌入到我的电子商务网站中：二次开发接入到您的订阅服务或者电子商务网站中，为网站支持接收加密货币付款渠道，简要流程如下：
@@ -100,6 +95,11 @@ go build cmd/main.go
 
 # 可靠性说明
 参看 `go-fsm框架` [说明](https://github.com/HEUDavid/go-fsm?tab=readme-ov-file#reliability-statement)
+
+## TODO
+- 前端页面
+- Docker快速部署
+- Step by Step 文档
 
 ## 联系我
 admin@mdavid.cn
