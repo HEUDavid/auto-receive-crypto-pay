@@ -15,7 +15,7 @@ type ServiceWorker struct {
 
 func NewWorker() *ServiceWorker {
 	w := &ServiceWorker{}
-	w.MaxGoroutines = 10
+	w.MaxGoroutines = 20
 	return w
 }
 
@@ -31,8 +31,8 @@ func InitWorker() {
 		)
 		Worker.RegisterFSM(ReceiptFSM)
 		Worker.RegisterGenerator(util.UniqueID)
-		Worker.RegisterDB(&db.Factory{Section: "mysql_public"})
-		Worker.RegisterMQ(&mq.Factory{Section: "rmq_public"})
+		Worker.RegisterDB(&db.Factory{Section: "mysql"})
+		Worker.RegisterMQ(&mq.Factory{Section: "rmq"})
 		Worker.Config = util.GetConfig()
 		Worker.Init()
 	})
