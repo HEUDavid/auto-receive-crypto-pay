@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	// Hook 监听地址活动，收到 node services 回调, 节点服务参考：https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services
+	// Hook 监听地址活动，收到 Node Services 回调, 节点服务参考：https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services
 	// Processed 回调请求落库之后，执行自定义逻辑
 	Hook      = GenState("Hook", false, hookHandler)
 	Processed = State[*ReceiptData]{Name: "Processed", IsFinal: true, Handler: nil}
@@ -43,7 +43,8 @@ var ReceiptFSM = func() FSM[*ReceiptData] {
 func hookHandler(task *Task[*ReceiptData]) error {
 	log.Printf("[FSM] State: %s, Task.Data: %s", task.State, _pretty(task.GetData()))
 	task.Data.Comment = "webhook payload"
-	// 检查数据，然后根据合法收据建立新的任务
+
+	// 检查数据，根据合法收据建立新的任务
 	// log.Println(_pretty((*task.GetData()).RawData))
 
 	var rawData parser.WebhookData
@@ -53,11 +54,12 @@ func hookHandler(task *Task[*ReceiptData]) error {
 
 	adminAddress, exists := GetConfig().AdminAddress[rawData.Event.Network]
 	if !exists {
-		task.State = Processed.GetName() // 标记为已处理
+		task.State = Processed.GetName()
 		return nil
 	}
+
 	for _, a := range rawData.Event.Activity {
-		if !contains(adminAddress, a.ToAddress) {
+		if !_contains(adminAddress, a.ToAddress) {
 			continue
 		}
 
@@ -94,7 +96,7 @@ func genTokenHandler(task *Task[*ReceiptData]) error {
 	log.Printf("[FSM] State: %s, Task: %s", task.State, _pretty(task))
 
 	// Invoke RPC interfaces to perform certain operations.
-	// 生成卡密或者发送商品之类的
+	// 生成token或者发送商品卡密之类的
 	task.Data.Token = Worker.GenID()
 
 	currentTime := time.Now()
@@ -114,7 +116,7 @@ func _pretty(v interface{}) string {
 	return string(s)
 }
 
-func contains(slice []string, item string) bool {
+func _contains(slice []string, item string) bool {
 	for _, element := range slice {
 		if element == item {
 			return true
