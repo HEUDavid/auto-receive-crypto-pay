@@ -65,6 +65,7 @@ func _response(c *gin.Context, err error, task interface{}) {
 
 func Index(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{
+		"hostRoot":       GetConfig().Global.HostRoot,
 		"adminAddresses": GetConfig().AdminAddress,
 	})
 }
@@ -83,17 +84,18 @@ func init() {
 }
 
 func main() {
+
 	r := gin.Default()
-	r.POST("/webhook", Webhook)
-	r.GET("/query", Query)
-	r.GET("/query_token", QueryToken)
+	hostRoot := GetConfig().Global.HostRoot
+	r.POST(fmt.Sprintf("%s/webhook", hostRoot), Webhook)
+	r.GET(fmt.Sprintf("%s/query", hostRoot), Query)
+	r.GET(fmt.Sprintf("%s/query_token", hostRoot), QueryToken)
 
-	root := util.FindProjectRoot()
-	r.Static("/src", fmt.Sprintf("%s/static/src", root))
-	r.LoadHTMLGlob(fmt.Sprintf("%s/static/templates/*", root))
+	r.GET(fmt.Sprintf("%s/pay", hostRoot), Index)
 
-	// 支付与查询
-	r.GET("/pay", Index)
+	sourceRoot := util.FindProjectRoot()
+	r.Static(fmt.Sprintf("%s/src", hostRoot), fmt.Sprintf("%s/static/src", sourceRoot))
+	r.LoadHTMLGlob(fmt.Sprintf("%s/static/templates/*", sourceRoot))
 
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
