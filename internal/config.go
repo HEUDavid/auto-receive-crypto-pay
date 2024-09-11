@@ -8,14 +8,14 @@ import (
 )
 
 type Config struct {
-	Global Global `toml:"global"`
+	Global       Global              `toml:"global"`
+	AdminAddress map[string][]string `toml:"adminAddress"`
 }
 
 type Global struct {
-	Mode         string   `toml:"mode"`
-	LogPath      string   `toml:"logPath"`
-	Addr         string   `toml:"addr"`
-	AdminAddress []string `toml:"adminAddress"`
+	Mode    string `toml:"mode"`
+	LogPath string `toml:"logPath"`
+	Addr    string `toml:"addr"`
 }
 
 var config *Config
