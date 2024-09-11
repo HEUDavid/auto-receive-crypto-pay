@@ -39,7 +39,15 @@ func Query(c *gin.Context) {
 
 func QueryToken(c *gin.Context) {
 	data, err := GetToken(c, Adapter.GetDB(), c.Query("from_address"))
-	_response(c, err, data)
+	_response(c, err, struct {
+		Token     string
+		ValidFrom uint64
+		ValidTo   uint64
+	}{
+		data.Token,
+		data.ValidFrom,
+		data.ValidTo,
+	})
 }
 
 func _response(c *gin.Context, err error, task interface{}) {
