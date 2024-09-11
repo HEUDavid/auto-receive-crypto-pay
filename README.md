@@ -69,9 +69,10 @@ port = 5672
 queue = "your_queue"
 ```
 
-## 开发中
+## 建设中
 - 前端页面
 - Docker快速部署
+- Step by Step 文档
 
 ## 二次开发
 - 拓展能力：核心逻辑定义 fsm 状态机，并实现状态处理器
