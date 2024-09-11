@@ -11,7 +11,7 @@
 ## 特点
 - 完全地点对点收款，无传统的中间平台
 - 无需KYC，无需用户注册
-- 无中介(只是依赖节点服务商推送，自接入区块链要求较高，成本也比较高，不推荐)
+- 无中介(只是依赖节点服务商推送，自接入区块链要求较高，成本也比较高)
 - 无费用(除网络费用)
 - 开源，自托管，完全控制
 - 支持多种网络，多种加密货币
@@ -22,21 +22,22 @@
 ```sh
 # webhook 回调
 curl -X POST http://localhost:8080/webhook \
--H "Content-Type: application/json" \
---data @hook.json
+     -H "Content-Type: application/json" \
+     --data @data/Test_ETH_MAINNET.json
 ```
 
 ```sh
 # 根据转账地址查询token
 bash -c 'curl -s "$1" | python -m json.tool' \
--- "http://localhost:8080/query_token?from_address=0x71660c4005ba85c37ccec55d0c4493e66fe775d3"
+     -- "http://localhost:8080/query_token?from_address=0x71660c4005ba85c37ccec55d0c4493e66fe775d3"
 ```
 ```shell
 # response:
 {
-    "Token": "d53de27ac97af3ace6680b7e000597b2",
-    "ValidFrom": 1726030163,
-    "ValidTo": 1728622163
+  "FromAddress": "0x71660c4005ba85c37ccec55d0c4493e66fe775d3",
+  "Token": "846c12ec01027efc24dd6c6d8f5081b1",
+  "ValidFrom": "2024-09-12T06:46:41+08:00",
+  "ValidTo": "2024-10-12T06:46:41+08:00"
 }
 ```
 
@@ -46,9 +47,13 @@ bash -c 'curl -s "$1" | python -m json.tool' \
 mode = "debug"
 logPath = "log/water.log"
 addr = "127.0.0.1:8080"
-# 您的收款地址，可配置多个
-adminAddress = [
-    "0x7853b3736edba9d7ce681f2a90264307694f97f2",
+
+[adminAddress]  # 收款地址: 网络类型与收款地址列表
+MATIC_MAINNET = [
+  "0x950a4e3beb32d3862272592c8bae79fb5f3475db",
+]
+ETH_MAINNET = [
+  "0x950a4e3beb32d3862272592c8bae79fb5f3475db",
 ]
 
 [mysql]
