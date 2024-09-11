@@ -13,9 +13,10 @@ type Config struct {
 }
 
 type Global struct {
-	Mode    string `toml:"mode"`
-	LogPath string `toml:"logPath"`
-	Addr    string `toml:"addr"`
+	Mode     string `toml:"mode"`
+	LogPath  string `toml:"logPath"`
+	Addr     string `toml:"addr"`
+	HostRoot string `toml:"hostRoot"`
 }
 
 var config *Config
