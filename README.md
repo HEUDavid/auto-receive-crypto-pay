@@ -29,13 +29,13 @@ mkdir -p receivepay && tar -xzf receivepay-linux-amd64.tar.gz -C receivepay
 # 修改配置
 cp conf.toml.example conf.toml
 
-# 日志文件
+# 日志路径
 mkdir -p receivepay/log
 
 ./receivepay-linux-amd64
 ```
 
-搭配 nginx，注意 `location /gin` `http://127.0.0.1:8080` 和 配置文件中 `hostRoot` `addr` 保持一致。
+搭配 nginx，注意 `location /gin` `http://127.0.0.1:8080` 和 配置文件中 `hostRoot` `addr` 保持一致
 ```conf
 location /gin {
     proxy_pass http://127.0.0.1:8080;
@@ -55,7 +55,7 @@ curl -X POST http://localhost:8080/webhook?auth=auth_key \
 ```
 
 ```sh
-# 根据转账地址查询token
+# 根据转账地址查询 token
 bash -c 'curl -s "$1" | python -m json.tool' \
      -- "http://localhost:8080/query_token?from_address=0x71660c4005ba85c37ccec55d0c4493e66fe775d3"
 ```
@@ -140,7 +140,6 @@ go build cmd/main.go
 参看 `go-fsm框架` [说明](https://github.com/HEUDavid/go-fsm?tab=readme-ov-file#reliability-statement)
 
 ## TODO
-- 前端页面
 - Step by Step 文档
 
 ## 联系我
