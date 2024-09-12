@@ -62,7 +62,14 @@ jobs:
 
       # 等待标签推送完成
       - name: Wait for tag
-        run: sleep 5
+        run: sleep 10  # 等待 10 秒确保标签推送到远程仓库
+
+      # 确认标签是否已推送
+      - name: Check if tag exists remotely
+        run: |
+          git fetch --tags
+          git tag --list | grep $TAG_NAME || (echo "Tag not found!" && exit 1)
+
 
   release:
     runs-on: ubuntu-latest
