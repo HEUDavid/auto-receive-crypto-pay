@@ -52,13 +52,17 @@ func hookHandler(task *Task[*ReceiptData]) error {
 		fmt.Println("json.Unmarshal error: ", err)
 	}
 
-	adminAddress, exists := GetConfig().AdminAddress[rawData.Event.Network]
+	addressConfig, exists := GetConfig().AdminAddress[rawData.Event.Network]
 	if !exists {
 		task.Data.Comment = "no relevant network is configured"
 		task.State = Processed.GetName()
 		return nil
 	}
 
+	var adminAddress []string
+	for _, a := range addressConfig {
+		adminAddress = append(adminAddress, a.Address)
+	}
 	for _, a := range rawData.Event.Activity {
 		if !_contains(adminAddress, a.ToAddress) {
 			continue
