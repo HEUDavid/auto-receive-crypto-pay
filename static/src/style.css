@@ -102,6 +102,11 @@ body {
     color: #494277;
 }
 
+form {
+    font-size: 12px;
+    font-family: monospace;
+}
+
 .input_address {
     font-size: 12px;
     font-family: monospace;
@@ -186,6 +191,10 @@ body {
     .list li {
         font-size: 15px;
         padding: 4px 13px 4px 13px
+    }
+
+    form {
+        font-size: 0.82em
     }
 
     .input_address {
