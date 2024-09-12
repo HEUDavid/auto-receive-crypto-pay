@@ -49,13 +49,10 @@ jobs:
         id: create_tag_step
         run: |
           TAG_NAME=$(date +'%Y%m%d%H%M%S')  # Generate tag with timestamp
-          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV  # Save tag to environment
           git tag $TAG_NAME
           git push origin $TAG_NAME
-        # Use set-output to export the tag name as an output from this step
-        shell: bash
-        env:
-          TAG_NAME: $TAG_NAME
+        outputs:
+          tag_name: ${{ steps.create_tag_step.outputs.TAG_NAME }}  # Output the tag name
 
   release:
     runs-on: ubuntu-latest
@@ -74,7 +71,7 @@ jobs:
       - name: Create or Update GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.TAG_NAME }}  # Use the environment variable to pass the tag name
+          tag_name: ${{ needs.create_tag.outputs.tag_name }}  # Access the tag from create_tag job
           name: "Latest Release"
           draft: false
           prerelease: false
