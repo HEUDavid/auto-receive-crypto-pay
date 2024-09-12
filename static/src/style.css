@@ -95,7 +95,6 @@ body {
     display: block;
 }
 
-
 .network {
     width: 8em;
     display: inline-block;
@@ -213,7 +212,6 @@ form {
     .list li a {
         font-size: 0.82em
     }
-
 
     .context h1 {
         font-size: calc(1.1rem + 0.75vw + 1.05vh)
