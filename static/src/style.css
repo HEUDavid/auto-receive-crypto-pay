@@ -33,6 +33,7 @@ body {
     text-align: left;
     font-weight: 400;
     margin-bottom: 5px;
+    margin-top: 5px;
     padding-left: 15px
 }
 
@@ -133,7 +134,7 @@ form {
 
 @media only screen and (max-width: 600px) {
     .list-container {
-        width: 90%;
+        width: 96%;
         top: 48%
     }
 
@@ -142,7 +143,9 @@ form {
     }
 
     .list-container h2 {
-        font-size: 14pt
+        font-size: 13pt;
+        margin-bottom: 5px;
+        margin-top: 5px;
     }
 
     .list {
