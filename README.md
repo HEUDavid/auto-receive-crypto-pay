@@ -25,7 +25,7 @@ mkdir -p receivepay && tar -xzf receivepay-linux-amd64.tar.gz -C receivepay
 # 修改配置
 cp conf.toml.example conf.toml
 
-# 日志文件夹
+# 日志文件
 mkdir -p receivepay/log
 
 ./receivepay-linux-amd64
