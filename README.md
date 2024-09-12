@@ -80,7 +80,7 @@ bash -c 'curl -s "$1" | python -m json.tool' \
 ## 配置文件
 ```toml
 [global]
-mode = "debug"
+mode = "debug"  # debug release test
 logPath = "log/water.log"
 addr = "127.0.0.1:8080"
 hostRoot = "/gin"  # ""或"/abc"这样
