@@ -19,10 +19,10 @@ jobs:
         goos:
           - linux
           - windows
-          - darwin  # Supported OS
+          - darwin
         goarch:
           - amd64
-          - arm64  # Supported architectures
+          - arm64
     steps:
       - uses: actions/checkout@v4  # Checkout code
 
