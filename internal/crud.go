@@ -5,11 +5,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetToken(c context.Context, db *gorm.DB, fromAddress string) (*ReceiptData, error) {
-	data := &ReceiptData{}
-	if err := db.Table(data.TableName()).Select("token, valid_from, valid_to").
-		Where("from_address = ?", fromAddress).Find(data).Error; err != nil {
+func GetToken(c context.Context, db *gorm.DB, fromAddress string) ([]*ReceiptData, error) {
+	var dataList []*ReceiptData
+	if err := db.Table((&ReceiptData{}).TableName()).
+		Select("*").Omit("raw_data").
+		Where("from_address = ?", fromAddress).
+		Find(&dataList).Error; err != nil {
 		return nil, err
 	}
-	return data, nil
+	return dataList, nil
 }
