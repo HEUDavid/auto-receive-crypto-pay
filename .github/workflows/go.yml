@@ -36,13 +36,17 @@ jobs:
           EXT=""
           if [ "${{ matrix.goos }}" == "windows" ]; then EXT=".exe"; fi
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -v -o ./receivepay-${{ matrix.goos }}-${{ matrix.goarch }}$EXT ./cmd
+          if [ "${{ matrix.goos }}" != "windows" ]; then
+            chmod +x ./receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+          fi
 
       - name: Test
         run: go test -v ./...
 
-      - name: Set executable permissions (Linux/Darwin)
-        if: matrix.goos != 'windows'  # Only needed for non-Windows platforms
-        run: chmod +x ./receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+      - name: Set execute permissions for Unix-like systems
+        run: |
+          chmod +x ./receivepay-linux-*
+          chmod +x ./receivepay-darwin-*
 
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v3
