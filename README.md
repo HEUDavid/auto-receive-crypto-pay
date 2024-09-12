@@ -8,6 +8,9 @@
 先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送商品卡密等）。
 <img src="./docs/assets/receipt.jpg" alt="ReceiptFSM" width="600"/>
 
+收款与查询页面：https://api.mdavid.cn/gin/pay
+<img src="./docs/assets/index.jpg" alt="ReceiptFSM" width="800"/>
+
 ## 特点
 - 完全地点对点收款，无传统的中间平台
 - 无需KYC，无需用户注册
