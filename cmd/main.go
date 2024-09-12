@@ -121,5 +121,7 @@ func main() {
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
 
+	addr := GetConfig().Global.Addr
+	log.Printf("Listening on %s%s\n", addr, hostRoot)
 	_ = r.Run(GetConfig().Global.Addr)
 }
