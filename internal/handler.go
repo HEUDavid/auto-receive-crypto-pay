@@ -54,6 +54,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 
 	adminAddress, exists := GetConfig().AdminAddress[rawData.Event.Network]
 	if !exists {
+		task.Data.Comment = "no relevant network is configured"
 		task.State = Processed.GetName()
 		return nil
 	}
@@ -63,6 +64,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 			continue
 		}
 
+		task.Data.Comment = "process receipt"
 		logicTask := GenTaskInstance(a.Hash, "", &ReceiptData{Data: model.Data{
 			Network:         rawData.Event.Network,
 			Hash:            a.Hash,
