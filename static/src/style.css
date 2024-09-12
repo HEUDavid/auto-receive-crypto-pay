@@ -107,7 +107,11 @@ form {
 }
 
 .input_address {
+    font-size: 12px;
+    font-family: monospace;
     min-width: 308px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 .query_button {
@@ -120,7 +124,6 @@ form {
 }
 
 .list li a input {
-    font-size: 0.82em;
     text-decoration: none;
     color: inherit
 }
@@ -181,6 +184,10 @@ form {
     .list li {
         font-size: 15px;
         padding: 4px 13px 4px 13px
+    }
+
+    .input_address {
+        font-size: 15px;
     }
 
     .list li .circle {
