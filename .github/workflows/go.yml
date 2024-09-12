@@ -1,28 +1,74 @@
-# This workflow will build a golang project
+# This workflow will build a Golang project for multiple platforms and upload the binaries to the release.
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: Go
+name: Go Cross-Platform Build and Release
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  release:
+    types: [ created ]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [ linux, windows, darwin ] # 支持的操作系统
+        goarch: [ amd64, arm64 ]         # 支持的架构
     steps:
-    - uses: actions/checkout@v4
+      # 检出代码
+      - uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.22'
+      # 设置 Go 环境
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
 
-    - name: Build
-      run: go build -v ./...
+      # 构建二进制文件
+      - name: Build
+        run: |
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
 
-    - name: Test
-      run: go test -v ./...
+      # 运行测试
+      - name: Test
+        run: go test -v ./...
+
+      # 将二进制文件保存为工件
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: ./receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+
+  # 发布制品到 GitHub Release
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'release'
+    steps:
+      # 检出代码
+      - uses: actions/checkout@v4
+
+      # 下载构建工件
+      - name: Download binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+
+      # 发布到 GitHub Release
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            receivepay-linux-amd64
+            receivepay-linux-arm64
+            receivepay-windows-amd64.exe
+            receivepay-windows-arm64.exe
+            receivepay-darwin-amd64
+            receivepay-darwin-arm64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
