@@ -31,7 +31,7 @@ jobs:
       # 构建二进制文件
       - name: Build
         run: |
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -v ./... -o receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
 
       # 运行测试
       - name: Test
