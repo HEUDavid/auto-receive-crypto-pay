@@ -46,7 +46,7 @@ func Query(c *gin.Context) {
 }
 
 func QueryToken(c *gin.Context) {
-	dataList, err := GetToken(c, Adapter.GetDB(), c.Query("from_address"))
+	dataList, err := GetTokenByAddress(c, Adapter.GetDB(), c.Query("from_address"))
 	type token struct {
 		Token           string
 		ValidFrom       time.Time
@@ -74,6 +74,11 @@ func QueryToken(c *gin.Context) {
 		tokens = append(tokens, t)
 	}
 	_response(c, err, tokens)
+}
+
+func TokenDetails(c *gin.Context) {
+	data, err := GetTokenDetails(c, Adapter.GetDB(), c.Query("token"))
+	_response(c, err, data)
 }
 
 func _response(c *gin.Context, err error, task interface{}) {
@@ -111,6 +116,7 @@ func main() {
 	r.POST(fmt.Sprintf("%s/webhook", hostRoot), Webhook)
 	r.GET(fmt.Sprintf("%s/query", hostRoot), Query)
 	r.GET(fmt.Sprintf("%s/query_token", hostRoot), QueryToken)
+	r.GET(fmt.Sprintf("%s/token_details", hostRoot), TokenDetails)
 
 	r.GET(fmt.Sprintf("%s/pay", hostRoot), Index)
 
