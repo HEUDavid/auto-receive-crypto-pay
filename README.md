@@ -58,9 +58,9 @@ bash -c 'curl -s "$1" | python -m json.tool' \
 # response:
 {
   "FromAddress": "0x71660c4005ba85c37ccec55d0c4493e66fe775d3",
-  "Token": "846c12ec01027efc24dd6c6d8f5081b1",
-  "ValidFrom": "2024-09-12T06:46:41+08:00",
-  "ValidTo": "2024-10-12T06:46:41+08:00"
+  "Token": "942ef637afad1f6ac3860c4dd8a0ff74",
+  "ValidFrom": "2024-09-12T04:55:49Z",
+  "ValidTo": "2024-10-12T04:55:49Z"
 }
 ```
 
