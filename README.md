@@ -61,12 +61,19 @@ bash -c 'curl -s "$1" | python -m json.tool' \
 ```
 ```shell
 # response:
-{
-  "FromAddress": "0x71660c4005ba85c37ccec55d0c4493e66fe775d3",
-  "Token": "942ef637afad1f6ac3860c4dd8a0ff74",
-  "ValidFrom": "2024-09-12T04:55:49Z",
-  "ValidTo": "2024-10-12T04:55:49Z"
-}
+[
+  {
+    "Token": "942ef637afad1f6ac3860c4dd8a0ff74",
+    "ValidFrom": "2024-09-12T12:55:49+08:00",
+    "ValidTo": "2024-10-12T12:55:49+08:00",
+    "Network": "ETH_MAINNET",
+    "FromAddress": "0x71660c4005ba85c37ccec55d0c4493e66fe775d3",
+    "ToAddress": "0x950a4e3beb32d3862272592c8bae79fb5f3475db",
+    "Asset": "USDC",
+    "Value": 2400,
+    "TransactionTime": "2024-09-12T12:55:45+08:00"
+  }
+]
 ```
 也可以通过 `Node Service` dashboard 发送测试消息来测试
 
