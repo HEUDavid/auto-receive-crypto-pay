@@ -19,13 +19,14 @@
 
 ## 快速使用
 ```shell
-# Clone 仓库，因为有静态资源
-git clone https://github.com/HEUDavid/auto-receive-crypto-pay.git
-cd auto-receive-crypto-pay
+wget -4 https://github.com/HEUDavid/auto-receive-crypto-pay/releases/latest/download/receivepay-linux-amd64.tar.gz
+mkdir -p receivepay && tar -xzf receivepay-linux-amd64.tar.gz -C receivepay
 
-# 下载最新版本的制品(根据自己的系统)
-wget https://github.com/HEUDavid/auto-receive-crypto-pay/releases/latest/download/receivepay-linux-amd64
-chmod +x ./receivepay-linux-amd64
+# 修改配置
+cp conf.toml.example conf.toml
+
+# 日志文件夹
+mkdir -p receivepay/log
 
 ./receivepay-linux-amd64
 ```
