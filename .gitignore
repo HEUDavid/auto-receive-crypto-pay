@@ -34,3 +34,4 @@ go.sum
 *.log
 *.sh
 main
+receivepay-*
