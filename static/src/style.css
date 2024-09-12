@@ -107,7 +107,7 @@ form {
 }
 
 .footer {
-    bottom: 4.0vh;
+    bottom: 25px;
     position: absolute;
     width: 100%;
     text-align: center
@@ -116,7 +116,7 @@ form {
 .footer a {
     font-family: ui-serif;
     font-size: clamp(10px, calc(0.5rem + 0.2vw + 0.38vh), 12px);
-    color: #4a457e;
+    color: rgba(28, 28, 28, 0.8);
     text-decoration: none
 }
 
