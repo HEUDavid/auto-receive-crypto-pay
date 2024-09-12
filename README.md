@@ -21,11 +21,12 @@
 ```shell
 # Clone 仓库，因为有静态资源
 git clone https://github.com/HEUDavid/auto-receive-crypto-pay.git
-cd auto-receive-crypto-pay.git
+cd auto-receive-crypto-pay
 
-# 下载最新版本的制品
-wget https://github.com/HEUDavid/auto-receive-crypto-pay/releases/latest/download/receivepay-darwin-amd64
-./receivepay-darwin-amd64
+# 下载最新版本的制品(根据自己的系统)
+wget https://github.com/HEUDavid/auto-receive-crypto-pay/releases/latest/download/receivepay-linux-amd64
+
+./receivepay-linux-amd64
 ```
 ```sh
 # webhook 回调
