@@ -30,6 +30,18 @@ mkdir -p receivepay/log
 
 ./receivepay-linux-amd64
 ```
+
+搭配 nginx，注意 `location /gin` `http://127.0.0.1:8080` 和 配置文件中 `hostRoot` `addr` 保持一致。
+```conf
+location /gin {
+    proxy_pass http://127.0.0.1:8080;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
 ```sh
 # webhook 回调
 curl -X POST http://localhost:8080/webhook \
