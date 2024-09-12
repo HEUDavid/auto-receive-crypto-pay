@@ -17,6 +17,7 @@ type Global struct {
 	LogPath  string `toml:"logPath"`
 	Addr     string `toml:"addr"`
 	HostRoot string `toml:"hostRoot"`
+	Auth     string `toml:"auth"`
 }
 
 var config *Config
