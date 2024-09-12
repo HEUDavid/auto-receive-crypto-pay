@@ -17,6 +17,11 @@ import (
 func Webhook(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 
+	if c.Query("auth") != GetConfig().Global.Auth {
+		c.JSON(http.StatusBadRequest, gin.H{"err": "auth failed"})
+		return
+	}
+
 	body, err := io.ReadAll(c.Request.Body)
 	log.Printf("webhook payload: %s, %v\n", body, err)
 	if err != nil {
