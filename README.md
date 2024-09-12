@@ -22,6 +22,7 @@
 
 ## 快速使用
 ```shell
+# 以 Linux 版本部署为例
 wget -4 https://github.com/HEUDavid/auto-receive-crypto-pay/releases/latest/download/receivepay-linux-amd64.tar.gz
 mkdir -p receivepay && tar -xzf receivepay-linux-amd64.tar.gz -C receivepay
 
@@ -45,6 +46,7 @@ location /gin {
 }
 ```
 
+接口测试
 ```sh
 # webhook 回调(做好安全防护)
 curl -X POST http://localhost:8080/webhook?auth=auth_key \
@@ -66,6 +68,7 @@ bash -c 'curl -s "$1" | python -m json.tool' \
   "ValidTo": "2024-10-12T04:55:49Z"
 }
 ```
+也可以通过 `Node Service` dashboard 发送测试消息来测试
 
 ## 配置文件
 ```toml
@@ -73,7 +76,7 @@ bash -c 'curl -s "$1" | python -m json.tool' \
 mode = "debug"
 logPath = "log/water.log"
 addr = "127.0.0.1:8080"
-hostRoot = "/gin"  # ""或"/abc"
+hostRoot = "/gin"  # ""或"/abc"这样
 
 [adminAddress]  # 收款地址: 网络类型与收款地址列表
 MATIC_MAINNET = [
@@ -102,17 +105,6 @@ port = 5672
 queue = "your_queue"
 ```
 
-## 二次开发
-- 我想拓展一些能力
-  - 核心逻辑定义 fsm 状态机，增加对应节点及其状态处理器
-- 我想嵌入到我的电子商务网站中
-  - 二次开发接入到您的订阅服务或者电子商务网站中，为网站支持接收加密货币付款渠道，简要流程参考：
-      1. 用户在您的网站注册，并绑定用户的支付地址
-      2. 展示管理员支付信息(收款地址、网络、币种)
-      3. 用户自行发起转账动作
-      4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成相关订阅token，发送商品卡密等)
-
-
 ## 从源码构建与运行
 假设您已经安装了 Go，那么可以打开命令行界面，执行如下命令：
 ```shell
@@ -126,6 +118,16 @@ go build cmd/main.go
 ./main
 ```
 交叉编译参看Golang官方文档
+
+## 二次开发
+- 我想拓展一些能力
+  - 核心逻辑定义 fsm 状态机，增加对应节点及其状态处理器
+- 我想嵌入到我的电子商务网站中
+  - 二次开发接入到您的订阅服务或者电子商务网站中，为网站支持接收加密货币付款渠道，简要流程参考：
+    1. 用户在您的网站注册，并绑定用户的支付地址
+    2. 展示管理员支付信息(收款地址、网络、币种)
+    3. 用户自行发起转账动作
+    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成相关订阅token，发送商品卡密等)
 
 # 可靠性说明
 参看 `go-fsm框架` [说明](https://github.com/HEUDavid/go-fsm?tab=readme-ov-file#reliability-statement)
