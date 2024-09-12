@@ -75,7 +75,7 @@ jobs:
           echo "Creating release $TAG_NAME"
           gh release create $TAG_NAME ./receivepay-* \
             --title "Release $TAG_NAME" \
-            --notes "Automated release $TAG_NAME" \
+            --notes "Instructions: https://github.com/HEUDavid/auto-receive-crypto-pay" \
             --draft=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
