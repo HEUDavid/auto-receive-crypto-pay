@@ -5,24 +5,17 @@ permissions:
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - "main"
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos:
-          - linux
-          - windows
-          - darwin
-        goarch:
-          - amd64
-          - arm64
+        goos: [ linux, windows, darwin ]  # Supported OS
+        goarch: [ amd64, arm64 ]          # Supported architectures
     steps:
       - uses: actions/checkout@v4  # Checkout code
 
@@ -31,23 +24,43 @@ jobs:
         with:
           go-version: '1.22'  # Set Go version
 
-      - name: Build
+      - name: Build and Package
         run: |
-          EXT=""
-          if [ "${{ matrix.goos }}" == "windows" ]; then EXT=".exe"; fi
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -v -o ./receivepay-${{ matrix.goos }}-${{ matrix.goarch }}$EXT ./cmd
+          BINARY_NAME="receivepay-${{ matrix.goos }}-${{ matrix.goarch }}"
+          if [ "${{ matrix.goos }}" == "windows" ]; then
+            BINARY_NAME="${BINARY_NAME}.exe"
+          fi
+          
+          # Build the binary
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -v -o ${BINARY_NAME} ./cmd
+          
+          # Create a directory for packaging
+          mkdir -p release-package
+          
+          # Copy binary, conf, static, and go.mod
+          cp ${BINARY_NAME} release-package/
+          cp -r conf static release-package/
+          cp go.mod release-package/
+          
+          # Package the files
+          if [ "${{ matrix.goos }}" == "windows" ]; then
+            zip -r ${BINARY_NAME}.zip release-package
+          else
+            tar -czf ${BINARY_NAME}.tar.gz -C release-package .
+          fi
+          
+          # Set execute permissions for Unix-like systems
           if [ "${{ matrix.goos }}" != "windows" ]; then
-            chmod +x ./receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+            chmod +x release-package/${BINARY_NAME}
           fi
 
-      - name: Test
-        run: go test -v ./...
-
-      - name: Upload binary as artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: release-binaries
-          path: ./receivepay-*
+          name: release-packages
+          path: |
+            *.zip
+            *.tar.gz
 
   create_release:
     runs-on: ubuntu-latest
@@ -58,24 +71,38 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for all tags and branches
 
-      - name: Download binaries
+      - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: release-binaries
-
-      - name: Set execute permissions for Unix-like systems
-        run: |
-          chmod +x ./receivepay-linux-*
-          chmod +x ./receivepay-darwin-*
+          name: release-packages
 
       - name: Create Release
         id: create_release
         run: |
           TAG_NAME=$(date +'v%Y.%m.%d-%H%M%S')
           echo "Creating release $TAG_NAME"
-          gh release create $TAG_NAME ./receivepay-* \
+          RELEASE_NOTES="## Release $TAG_NAME
+
+          ### 下载和使用说明：
+          
+          #### Windows:
+          1. 下载对应的 .zip 文件
+          2. 解压文件
+          3. 运行 receivepay-windows-[ARCH].exe
+          
+          #### Linux/macOS:
+          1. 下载对应的 .tar.gz 文件
+          2. 解压文件：\`tar -xzf receivepay-[OS]-[ARCH].tar.gz\`
+          3. 运行程序：\`./receivepay-[OS]-[ARCH]\`
+          
+          注意：
+          - 将 [OS] 和 [ARCH] 替换为您的操作系统和架构（例如 linux-amd64）。
+          - 确保 \`conf\` 和 \`static\` 目录与可执行文件在同一目录下。
+          - \`go.mod\` 文件已包含在发布包中，用于参考或版本控制。"
+          
+          gh release create $TAG_NAME *.zip *.tar.gz \
             --title "Release $TAG_NAME" \
-            --notes "Instructions: https://github.com/HEUDavid/auto-receive-crypto-pay" \
+            --notes "$RELEASE_NOTES" \
             --draft=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
