@@ -18,7 +18,15 @@
   - 实际上您只需自行选择节点服务商，配置回调地址即可
 
 ## 快速使用
+```shell
+# Clone 仓库，因为有静态资源
+git clone https://github.com/HEUDavid/auto-receive-crypto-pay.git
+cd auto-receive-crypto-pay.git
 
+# 下载最新版本的制品
+wget https://github.com/HEUDavid/auto-receive-crypto-pay/releases/latest/download/receivepay-darwin-amd64
+./receivepay-darwin-amd64
+```
 ```sh
 # webhook 回调
 curl -X POST http://localhost:8080/webhook \
