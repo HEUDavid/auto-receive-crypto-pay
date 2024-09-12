@@ -25,6 +25,7 @@ cd auto-receive-crypto-pay
 
 # 下载最新版本的制品(根据自己的系统)
 wget https://github.com/HEUDavid/auto-receive-crypto-pay/releases/latest/download/receivepay-linux-amd64
+chmod +x ./receivepay-linux-amd64
 
 ./receivepay-linux-amd64
 ```
