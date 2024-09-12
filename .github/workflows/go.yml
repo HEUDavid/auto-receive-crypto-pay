@@ -40,6 +40,10 @@ jobs:
       - name: Test
         run: go test -v ./...
 
+      - name: Set executable permissions (Linux/Darwin)
+        if: matrix.goos != 'windows'  # Only needed for non-Windows platforms
+        run: chmod +x ./receivepay-${{ matrix.goos }}-${{ matrix.goarch }}
+
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v3
         with:
