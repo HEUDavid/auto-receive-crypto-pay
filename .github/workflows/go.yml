@@ -5,17 +5,24 @@ permissions:
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "main"
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - "main"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [ linux, windows, darwin ]  # Supported OS
-        goarch: [ amd64, arm64 ]          # Supported architectures
+        goos:
+          - linux
+          - windows
+          - darwin  # Supported OS
+        goarch:
+          - amd64
+          - arm64  # Supported architectures
     steps:
       - uses: actions/checkout@v4  # Checkout code
 
