@@ -1,5 +1,8 @@
 name: Go Cross-Platform Build and Release
 
+permissions:
+  contents: write  # 确保有权写入 release
+
 on:
   push:
     branches: [ "main" ]
@@ -54,7 +57,7 @@ jobs:
         with:
           name: release-binaries
 
-      # 列出文件，方便调试
+      # 列出文件
       - name: List binaries
         run: ls -al
 
@@ -63,9 +66,9 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: latest  # 可根据需要修改标签名
-          release_name: "Latest Release"
-          draft: false      # 设置为 true 表示草稿状态的发布
+          tag_name: latest  # 确保使用有效的标签名
+          name: "Latest Release"
+          draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
