@@ -42,26 +42,19 @@ jobs:
   create_tag:
     runs-on: ubuntu-latest
     needs: build
-    outputs:
-      tag_name: ${{ steps.create_tag.outputs.tag_name }}  # Capture output from step
+    outputs: # Define job-level outputs
+      tag_name: ${{ steps.create_tag_step.outputs.tag_name }}  # Output the tag name from the step
     steps:
       - uses: actions/checkout@v4  # Checkout code
 
-      - name: Configure Git for Tagging
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
       - name: Create Tag
-        id: create_tag
+        id: create_tag_step  # Define step ID for setting outputs
         run: |
           TAG_NAME=$(date +'%Y%m%d%H%M%S')  # Generate a tag with the current timestamp
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV  # Save tag to environment
           git tag $TAG_NAME
           git push origin $TAG_NAME
-        # Use environment variables to set the output for this job
-        env:
-          TAG_NAME: ${{ steps.create_tag.outputs.TAG_NAME }}
+          echo "::set-output name=tag_name::$TAG_NAME"  # Set output for tag
 
   release:
     runs-on: ubuntu-latest
@@ -80,7 +73,7 @@ jobs:
       - name: Create or Update GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ needs.create_tag.outputs.tag_name }}  # Use the tag from create_tag job
+          tag_name: ${{ needs.create_tag.outputs.tag_name }}  # Access the tag output from create_tag job
           name: "Latest Release"
           draft: false
           prerelease: false
