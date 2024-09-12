@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetToken(c context.Context, db *gorm.DB, fromAddress string) ([]*ReceiptData, error) {
+func GetTokenByAddress(c context.Context, db *gorm.DB, fromAddress string) ([]*ReceiptData, error) {
 	var dataList []*ReceiptData
 	if err := db.Table((&ReceiptData{}).TableName()).
 		Select("*").Omit("raw_data").
@@ -14,4 +14,15 @@ func GetToken(c context.Context, db *gorm.DB, fromAddress string) ([]*ReceiptDat
 		return nil, err
 	}
 	return dataList, nil
+}
+
+func GetTokenDetails(c context.Context, db *gorm.DB, token string) (*ReceiptData, error) {
+	data := &ReceiptData{}
+	if err := db.Table((&ReceiptData{}).TableName()).
+		Select("*").Omit("raw_data").
+		Where("token = ?", token).
+		Scan(&data).Error; err != nil {
+		return nil, err
+	}
+	return data, nil
 }
