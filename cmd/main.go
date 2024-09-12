@@ -46,18 +46,34 @@ func Query(c *gin.Context) {
 }
 
 func QueryToken(c *gin.Context) {
-	data, err := GetToken(c, Adapter.GetDB(), c.Query("from_address"))
-	_response(c, err, struct {
-		FromAddress string
-		Token       string
-		ValidFrom   time.Time
-		ValidTo     time.Time
-	}{
-		c.Query("from_address"),
-		data.Token,
-		time.Unix(int64(data.ValidFrom), 0),
-		time.Unix(int64(data.ValidTo), 0),
-	})
+	dataList, err := GetToken(c, Adapter.GetDB(), c.Query("from_address"))
+	type token struct {
+		Token           string
+		ValidFrom       time.Time
+		ValidTo         time.Time
+		Network         string
+		FromAddress     string
+		ToAddress       string
+		Asset           string
+		Value           float64
+		TransactionTime time.Time
+	}
+	var tokens []token
+	for _, data := range dataList {
+		t := token{
+			Token:           data.Token,
+			ValidFrom:       time.Unix(int64(data.ValidFrom), 0),
+			ValidTo:         time.Unix(int64(data.ValidTo), 0),
+			Network:         data.Network,
+			FromAddress:     data.FromAddress,
+			ToAddress:       data.ToAddress,
+			Asset:           data.Asset,
+			Value:           data.Value,
+			TransactionTime: time.Unix(int64(data.TransactionTime), 0),
+		}
+		tokens = append(tokens, t)
+	}
+	_response(c, err, tokens)
 }
 
 func _response(c *gin.Context, err error, task interface{}) {
