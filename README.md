@@ -85,12 +85,12 @@ logPath = "log/water.log"
 addr = "127.0.0.1:8080"
 hostRoot = "/gin"  # ""或"/abc"这样
 
-[adminAddress]  # 收款地址: 网络类型与收款地址列表
+[adminAddress]  # 管理员收款地址: (网络：<地址，图片链接>)
 MATIC_MAINNET = [
-  "0x950a4e3beb32d3862272592c8bae79fb5f3475db",
+  { address = "0x950a4e3beb32d3862272592c8bae79fb5f3475db", url = "https://api.mdavid.cn/gin/src/MATIC.JPG" }
 ]
 ETH_MAINNET = [
-  "0x950a4e3beb32d3862272592c8bae79fb5f3475db",
+  { address = "0x950a4e3beb32d3862272592c8bae79fb5f3475db", url = "https://api.mdavid.cn/gin/src/ETH.JPG" }
 ]
 
 [mysql]
