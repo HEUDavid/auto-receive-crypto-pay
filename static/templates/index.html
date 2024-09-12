@@ -30,10 +30,11 @@
         {{ range $network, $addresses := .adminAddresses }}
         <li>
             <span class="circle"></span>
-            <a>
+            <a href="#">
                 <span class="network">{{ $network }}</span>:
                 {{ range $index, $address := $addresses }}
                 {{ $address }}
+                <img src="https://api.mdavid.cn/gin/src/arb.jpg" alt="{{ $network }}">
                 {{ end }}
             </a>
         </li>
