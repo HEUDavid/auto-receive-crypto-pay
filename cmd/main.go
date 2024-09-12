@@ -45,40 +45,51 @@ func Query(c *gin.Context) {
 	_response(c, Adapter.Query(c, task), task)
 }
 
+type token struct {
+	Token           string
+	Valid           bool
+	ValidFrom       time.Time
+	ValidTo         time.Time
+	Network         string
+	FromAddress     string
+	ToAddress       string
+	Asset           string
+	Value           float64
+	TransactionTime time.Time
+}
+
+func isValid(validFrom, validTo uint64) bool {
+	currentTime := uint64(time.Now().Unix())
+	return currentTime >= validFrom && currentTime <= validTo
+}
+
+func toToken(data *ReceiptData) *token {
+	return &token{
+		Token:           data.Token,
+		Valid:           isValid(data.ValidFrom, data.ValidTo),
+		ValidFrom:       time.Unix(int64(data.ValidFrom), 0),
+		ValidTo:         time.Unix(int64(data.ValidTo), 0),
+		Network:         data.Network,
+		FromAddress:     data.FromAddress,
+		ToAddress:       data.ToAddress,
+		Asset:           data.Asset,
+		Value:           data.Value,
+		TransactionTime: time.Unix(int64(data.TransactionTime), 0),
+	}
+}
+
 func QueryToken(c *gin.Context) {
 	dataList, err := GetTokenByAddress(c, Adapter.GetDB(), c.Query("from_address"))
-	type token struct {
-		Token           string
-		ValidFrom       time.Time
-		ValidTo         time.Time
-		Network         string
-		FromAddress     string
-		ToAddress       string
-		Asset           string
-		Value           float64
-		TransactionTime time.Time
-	}
-	var tokens []token
+	var tokens []*token
 	for _, data := range dataList {
-		t := token{
-			Token:           data.Token,
-			ValidFrom:       time.Unix(int64(data.ValidFrom), 0),
-			ValidTo:         time.Unix(int64(data.ValidTo), 0),
-			Network:         data.Network,
-			FromAddress:     data.FromAddress,
-			ToAddress:       data.ToAddress,
-			Asset:           data.Asset,
-			Value:           data.Value,
-			TransactionTime: time.Unix(int64(data.TransactionTime), 0),
-		}
-		tokens = append(tokens, t)
+		tokens = append(tokens, toToken(data))
 	}
 	_response(c, err, tokens)
 }
 
 func TokenDetails(c *gin.Context) {
 	data, err := GetTokenDetails(c, Adapter.GetDB(), c.Query("token"))
-	_response(c, err, data)
+	_response(c, err, toToken(data))
 }
 
 func _response(c *gin.Context, err error, task interface{}) {
