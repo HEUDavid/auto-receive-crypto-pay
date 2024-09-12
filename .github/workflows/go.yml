@@ -83,7 +83,7 @@ jobs:
           echo "Creating release $TAG_NAME"
           RELEASE_NOTES="## Auto Receive Crypto Pay
 
-          #### Release $TAG_NAME
+          ### Release $TAG_NAME
 
           Instructions: https://github.com/HEUDavid/auto-receive-crypto-pay"
 
