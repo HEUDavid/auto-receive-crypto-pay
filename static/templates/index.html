@@ -32,9 +32,9 @@
             <span class="circle"></span>
             <a href="#">
                 <span class="network">{{ $network }}</span>:
-                {{ range $index, $address := $addresses }}
-                {{ $address }}
-                <img src="https://api.mdavid.cn/gin/src/arb.jpg" alt="{{ $network }}">
+                {{ range $index, $addressConfig := $addresses }}
+                {{ $addressConfig.Address }}
+                <img src="{{ $addressConfig.URL }}" alt="{{ $network }}">
                 {{ end }}
             </a>
         </li>
