@@ -129,7 +129,6 @@ go build cmd/main.go
 
 ## TODO
 - 前端页面
-- Docker快速部署
 - Step by Step 文档
 
 ## 联系我
