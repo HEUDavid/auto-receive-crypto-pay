@@ -8,8 +8,8 @@ import (
 )
 
 type Config struct {
-	Global       Global              `toml:"global"`
-	AdminAddress map[string][]string `toml:"adminAddress"`
+	Global       Global                     `toml:"global"`
+	AdminAddress map[string][]AddressConfig `toml:"adminAddress"`
 }
 
 type Global struct {
@@ -18,6 +18,11 @@ type Global struct {
 	Addr     string `toml:"addr"`
 	HostRoot string `toml:"hostRoot"`
 	Auth     string `toml:"auth"`
+}
+
+type AddressConfig struct {
+	Address string `toml:"address"`
+	URL     string `toml:"url"`
 }
 
 var config *Config
