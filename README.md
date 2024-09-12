@@ -1,6 +1,7 @@
 <h1 align="center">Auto Receive Crypto Pay</h1>
 <h4 align="center">加密货币收款服务，直接的点对点接收，到账后自动执行动作，自托管。</h4>
 
+#### 中文 | English
 
 ## 简介
 通过[流行的节点服务](https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services)监听地址转账活动，
