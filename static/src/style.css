@@ -95,10 +95,6 @@ body {
     display: block;
 }
 
-form {
-    font-size: 12px;
-    font-family: monospace;
-}
 
 .network {
     width: 8em;
@@ -112,10 +108,16 @@ form {
     min-width: 308px;
     padding-top: 2px;
     padding-bottom: 2px;
+    border-radius: 2px;
+    border: 0;
 }
 
 .query_button {
-    color: #494277;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 2px;
+    border: 0;
 }
 
 .list li .circle::before {
@@ -187,7 +189,11 @@ form {
     }
 
     .input_address {
-        font-size: 15px;
+        font-size: 0.82em
+    }
+
+    .query_button {
+        font-size: 0.82em
     }
 
     .list li .circle {
@@ -199,9 +205,6 @@ form {
         font-size: 0.82em
     }
 
-    form {
-        font-size: 0.82em
-    }
 
     .context h1 {
         font-size: calc(1.1rem + 0.75vw + 1.05vh)
@@ -319,6 +322,7 @@ form {
         opacity: 1;
         border-radius: 0
     }
+
     100% {
         transform: translateY(-1000px) rotate(720deg);
         opacity: 0;
