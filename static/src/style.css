@@ -60,8 +60,8 @@ body {
 }
 
 .list li:hover {
-    /*background: #5c7fed;*/
-    /*color: #fff*/
+    background: #5c7fed;
+    color: #fff
 }
 
 .list li:hover .circle {
@@ -73,6 +73,26 @@ body {
     font-size: 0.90em;
     align-self: center;
     color: #6ecc8b
+}
+
+.list li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.list li a img {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+    width: 250px;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list li a:hover img {
+    display: block;
 }
 
 form {
