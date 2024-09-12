@@ -60,6 +60,10 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
+      # 等待标签推送完成
+      - name: Wait for tag
+        run: sleep 5
+
   release:
     runs-on: ubuntu-latest
     needs: create_tag
