@@ -132,6 +132,12 @@ form {
     color: #494277
 }
 
+@media only screen and (max-height: 400px) {
+    .footer {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .list-container {
         width: 96%;
