@@ -2,7 +2,8 @@
 mode = "debug"
 logPath = "log/water.log"
 addr = "127.0.0.1:8080"
-hostRoot = "/gin"  # ""或"/abc"
+hostRoot = ""  # ""或"/abc"
+auth = "auth_key"
 
 [adminAddress]  # 收款地址
 MATIC_MAINNET = [
