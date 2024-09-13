@@ -109,7 +109,7 @@ form {
 ::placeholder {
     font-size: 12px;
     font-family: monospace;
-    color: blue;
+    color: #656565;
 }
 
 .input_address {
@@ -128,7 +128,7 @@ form {
     padding: 2px;
     border-radius: 3px;
     border: 0;
-    background: #007afd;
+    background: rgb(26, 115, 232);
     color: white;
 }
 
