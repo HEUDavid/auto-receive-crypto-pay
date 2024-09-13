@@ -112,7 +112,7 @@ form {
     min-width: 308px;
     padding-top: 2px;
     padding-bottom: 2px;
-    border-radius: 2px;
+    border-radius: 3px;
     border: 0;
 }
 
@@ -120,8 +120,10 @@ form {
     font-size: 12px;
     font-family: monospace;
     padding: 2px;
-    border-radius: 2px;
+    border-radius: 3px;
     border: 0;
+    background: #007afd;
+    color: white;
 }
 
 .list li .circle::before {
