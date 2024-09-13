@@ -160,9 +160,19 @@ form {
     color: #494277
 }
 
-@media only screen and (max-height: 400px) {
+@media only screen and (max-height: 240px) {
     .footer {
         display: none;
+    }
+}
+
+@media only screen and (max-height: 340px) {
+    .footer {
+        bottom: 2px;
+    }
+
+    .footer a {
+        font-size: 6px;
     }
 }
 
