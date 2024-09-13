@@ -8,7 +8,7 @@
 当 `入账地址ToAddress` 收到加密货币后， `Node Services` 回调 `https://your_domain/webhook` 接口，
 先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送商品卡密等）。
 
-<img src="./docs/assets/receipt.svg" alt="ReceiptFSM" width="500"/>
+<img src="./docs/assets/receipt.svg" alt="ReceiptFSM" width="600"/>
 
 收款与查询页面：https://api.mdavid.cn/gin/pay
 <img src="./docs/assets/index.jpg" alt="index" width="800"/>
