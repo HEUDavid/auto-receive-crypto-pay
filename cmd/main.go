@@ -18,7 +18,7 @@ func Webhook(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 
 	if c.Query("auth") != GetConfig().Global.Auth {
-		c.JSON(http.StatusBadRequest, gin.H{"err": "auth failed"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "auth failed"})
 		return
 	}
 
@@ -120,25 +120,30 @@ func init() {
 	InitAdapter()
 }
 
+func router(path string) string {
+	return fmt.Sprintf("%s/%s", GetConfig().Global.HostRoot, path)
+}
+
+func source(path string) string {
+	return fmt.Sprintf("%s/%s", util.FindProjectRoot(), path)
+}
+
 func main() {
-
 	r := gin.Default()
-	hostRoot := GetConfig().Global.HostRoot
-	r.POST(fmt.Sprintf("%s/webhook", hostRoot), Webhook)
-	r.GET(fmt.Sprintf("%s/query", hostRoot), Query)
-	r.GET(fmt.Sprintf("%s/query_token", hostRoot), QueryToken)
-	r.GET(fmt.Sprintf("%s/token_details", hostRoot), TokenDetails)
 
-	r.GET(fmt.Sprintf("%s/pay", hostRoot), Index)
+	r.POST(router("webhook"), Webhook)
+	r.GET(router("query"), Query)
+	r.GET(router("query_token"), QueryToken)
+	r.GET(router("token_details"), TokenDetails)
 
-	sourceRoot := util.FindProjectRoot()
-	r.Static(fmt.Sprintf("%s/src", hostRoot), fmt.Sprintf("%s/static/src", sourceRoot))
-	r.LoadHTMLGlob(fmt.Sprintf("%s/static/templates/*", sourceRoot))
+	r.GET(router("pay"), Index)
+
+	r.Static(router("src"), source("static/src"))
+	r.LoadHTMLGlob(source("static/templates/*"))
 
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
 
-	addr := GetConfig().Global.Addr
-	log.Printf("Listening on %s%s\n", addr, hostRoot)
+	log.Printf("Listening on %s%s", GetConfig().Global.Addr, GetConfig().Global.HostRoot)
 	_ = r.Run(GetConfig().Global.Addr)
 }
