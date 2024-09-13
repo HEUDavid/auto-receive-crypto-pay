@@ -106,6 +106,12 @@ form {
     font-family: monospace;
 }
 
+::placeholder {
+    font-size: 12px;
+    font-family: monospace;
+    color: blue;
+}
+
 .input_address {
     font-size: 12px;
     font-family: monospace;
