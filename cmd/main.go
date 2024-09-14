@@ -37,12 +37,12 @@ func Webhook(c *gin.Context) {
 	task.Type = "Persist"
 	task.State = Hook.GetName()
 
-	_response(c, Adapter.Create(c, task), task)
+	response(c, Adapter.Create(c, task), task)
 }
 
 func Query(c *gin.Context) {
 	task := GenTaskInstance(c.Query("request_id"), c.Query("task_id"), &ReceiptData{})
-	_response(c, Adapter.Query(c, task), task)
+	response(c, Adapter.Query(c, task), task)
 }
 
 type token struct {
@@ -103,7 +103,7 @@ func QueryToken(c *gin.Context) {
 	for _, data := range dataList {
 		tokens = append(tokens, toToken(data))
 	}
-	_response(c, err, tokens)
+	response(c, err, tokens)
 }
 
 func TokenDetails(c *gin.Context) {
@@ -115,10 +115,10 @@ func TokenDetails(c *gin.Context) {
 	}
 
 	data, err := GetTokenDetails(c, Adapter.GetDB(), c.Query("token"))
-	_response(c, err, toToken(data))
+	response(c, err, toToken(data))
 }
 
-func _response(c *gin.Context, err error, task interface{}) {
+func response(c *gin.Context, err error, task interface{}) {
 	if err == nil {
 		c.JSON(http.StatusOK, task)
 	} else {
