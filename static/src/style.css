@@ -202,25 +202,9 @@ form {
         padding: 4px 13px 4px 13px
     }
 
-    form {
-        font-size: 0.82em
-    }
-
-    .address {
-        font-size: 0.82em
-    }
-
-    .query_button {
-        font-size: 0.82em
-    }
-
     .list li .circle {
         margin-right: 2px;
         font-size: 0.8em
-    }
-
-    .list li a {
-        font-size: 0.82em
     }
 
     .context h1 {
