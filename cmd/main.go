@@ -40,7 +40,7 @@ func Webhook(c *gin.Context) {
 	response(c, Adapter.Create(c, task), task)
 }
 
-func Query(c *gin.Context) {
+func QueryTask(c *gin.Context) {
 	task := GenTaskInstance(c.Query("request_id"), c.Query("task_id"), &ReceiptData{})
 	response(c, Adapter.Query(c, task), task)
 }
@@ -158,7 +158,7 @@ func main() {
 	r := gin.Default()
 
 	r.POST(router("webhook"), Webhook)
-	r.GET(router("query"), Query)
+	r.GET(router("query"), QueryTask)
 	r.GET(router("query_token"), QueryToken)
 	r.GET(router("token_details"), TokenDetails)
 
