@@ -111,17 +111,23 @@ form {
     color: #656565;
 }
 
-.input_address {
+.separator {
+    display: inline;
+}
+
+.address {
+    display: inline-block;
     font-size: 12px;
     font-family: monospace;
     min-width: 308px;
     padding-top: 2px;
     padding-bottom: 2px;
     border-radius: 3px;
-    border: 0;
+    border: 1px solid #000;
 }
 
 .query_button {
+    display: inline-block;
     font-size: 12px;
     font-family: monospace;
     padding: 2px;
@@ -200,7 +206,7 @@ form {
         font-size: 0.82em
     }
 
-    .input_address {
+    .address {
         font-size: 0.82em
     }
 
