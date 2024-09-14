@@ -30,11 +30,11 @@
         {{ range $network, $addresses := .adminAddresses }}
         <li>
             <span class="circle"></span>
-            <a href="#">
+            <a href="javascript:void(0);">
                 <span class="network">{{ $network }}</span>
                 <span class="separator">:</span>
                 {{ range $index, $addressConfig := $addresses }}
-                <span class="address">{{ $addressConfig.Address }}</span>
+                <span class="address" data-address="{{ $addressConfig.Address }}">{{ $addressConfig.Address }}</span>
                 <img src="{{ $addressConfig.URL }}" alt="{{ $network }}">
                 {{ end }}
             </a>
@@ -43,7 +43,7 @@
     </ul>
 
     <h2>Query Token</h2>
-    <ul class="list" id="fileList">
+    <ul class="list">
         <li>
             <span class="circle"></span>
             <form action="{{  .hostRoot  }}/query_token" method="GET">
@@ -60,5 +60,22 @@
     <a href="https://github.com/HEUDavid/go-fsm" target="_blank">Powered by go-fsm</a>
     <a href="https://github.com/HEUDavid/auto-receive-crypto-pay" target="_blank">and auto-receive-crypto-pay</a>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addressElements = document.querySelectorAll('span.address');
+        addressElements.forEach(function (addressElement) {
+            addressElement.addEventListener('click', function () {
+                const addressText = this.getAttribute('data-address');
+                navigator.clipboard.writeText(addressText).then(function () {
+                    alert("Address copied: " + addressText);
+                }).catch(function (error) {
+                    alert("Copy failed, please copy manually.");
+                    console.error("Copy failed: ", error);
+                });
+            });
+        });
+    });
+</script>
 </body>
 </html>
