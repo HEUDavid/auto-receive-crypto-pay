@@ -64,6 +64,9 @@ func isValid(validFrom, validTo uint64) bool {
 }
 
 func toToken(data *ReceiptData) *token {
+	if data == nil {
+		return nil
+	}
 	return &token{
 		Token:           data.Token,
 		Valid:           isValid(data.ValidFrom, data.ValidTo),
@@ -78,7 +81,23 @@ func toToken(data *ReceiptData) *token {
 	}
 }
 
+func checkRequest(c *gin.Context, required ...string) (bool, string) {
+	for _, param := range required {
+		if c.Query(param) == "" {
+			return false, param
+		}
+	}
+	return true, ""
+}
+
 func QueryToken(c *gin.Context) {
+	if valid, missingParam := checkRequest(c, "from_address"); !valid {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "missing required parameter: " + missingParam,
+		})
+		return
+	}
+
 	dataList, err := GetTokenByAddress(c, Adapter.GetDB(), c.Query("from_address"))
 	var tokens []*token
 	for _, data := range dataList {
@@ -88,6 +107,13 @@ func QueryToken(c *gin.Context) {
 }
 
 func TokenDetails(c *gin.Context) {
+	if valid, missingParam := checkRequest(c, "token"); !valid {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "missing required parameter: " + missingParam,
+		})
+		return
+	}
+
 	data, err := GetTokenDetails(c, Adapter.GetDB(), c.Query("token"))
 	_response(c, err, toToken(data))
 }
