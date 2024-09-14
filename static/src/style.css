@@ -179,6 +179,10 @@ form {
 }
 
 @media only screen and (max-width: 600px) {
+    .network {
+        width: 7.3rem;
+    }
+
     .list-container {
         width: 96%;
         top: 48%
@@ -203,7 +207,7 @@ form {
 
     .list li .circle {
         margin-right: 2px;
-        font-size: 0.8em
+        font-size: 0.80em
     }
 
     .context h1 {
