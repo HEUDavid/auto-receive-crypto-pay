@@ -11,7 +11,7 @@
 <img src="./docs/assets/receipt.svg" alt="ReceiptFSM" width="600"/>
 
 收款与查询页面：https://api.mdavid.cn/gin/pay
-<img src="./docs/assets/index.jpg" alt="index" width="800"/>
+<img src="./docs/assets/index.png" alt="Index" width="800"/>
 
 ## 特点
 - 完全地点对点收款，无传统的中间平台
