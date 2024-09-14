@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetTokenByAddress(c context.Context, db *gorm.DB, fromAddress string) ([]*ReceiptData, error) {
+func GetInvoiceByAddress(c context.Context, db *gorm.DB, fromAddress string) ([]*ReceiptData, error) {
 	var dataList []*ReceiptData
 	if err := db.Table((&ReceiptData{}).TableName()).
 		Omit("raw_data").

@@ -96,7 +96,7 @@ func QueryInvoice(c *gin.Context) {
 		return
 	}
 
-	dataList, err := GetTokenByAddress(c, Adapter.GetDB(), c.Query("from_address"))
+	dataList, err := GetInvoiceByAddress(c, Adapter.GetDB(), c.Query("from_address"))
 	var tokens []*token
 	for _, data := range dataList {
 		tokens = append(tokens, toToken(data))
