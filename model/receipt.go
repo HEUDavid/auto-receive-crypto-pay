@@ -9,9 +9,6 @@ import (
 type Data struct {
 	ID              uint64         `gorm:"autoIncrement:true;primaryKey;column:id;type:bigint unsigned;not null"`
 	TaskID          string         `gorm:"index:idx_task_id;column:task_id;type:char(32);not null"`
-	Token           string         `gorm:"column:token;type:varchar(64);not null;default:''"`
-	ValidFrom       uint64         `gorm:"column:valid_from;type:bigint unsigned;not null;default:0"`
-	ValidTo         uint64         `gorm:"column:valid_to;type:bigint unsigned;not null;default:0"`
 	Network         string         `gorm:"column:network;type:varchar(16);not null;default:''"`
 	Hash            string         `gorm:"column:hash;type:varchar(128);not null;default:''"`
 	FromAddress     string         `gorm:"index:idx_from_address;column:from_address;type:varchar(128);not null;default:''"`
@@ -19,6 +16,9 @@ type Data struct {
 	Asset           string         `gorm:"column:asset;type:varchar(32);not null;default:''"`
 	Value           float64        `gorm:"column:value;type:decimal(50,15);not null;default:0.000000000000000"`
 	RawData         datatypes.JSON `gorm:"column:raw_data;type:json;default:null"`
+	InvoiceID       string         `gorm:"column:invoice_id;type:varchar(64);not null;default:''"`
+	ValidFrom       uint64         `gorm:"column:valid_from;type:bigint unsigned;not null;default:0"`
+	ValidTo         uint64         `gorm:"column:valid_to;type:bigint unsigned;not null;default:0"`
 	TransactionTime uint64         `gorm:"column:transaction_time;type:bigint unsigned;not null;default:0;comment:'业务时间'"` // 业务时间
 	Comment         string         `gorm:"column:comment;type:varchar(128);not null;default:'';comment:'备注说明'"`            // 备注说明
 }
