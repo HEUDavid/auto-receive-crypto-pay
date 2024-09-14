@@ -61,6 +61,8 @@
     <a href="https://github.com/HEUDavid/auto-receive-crypto-pay" target="_blank">and auto-receive-crypto-pay</a>
 </div>
 
+<div id="tooltip" class="tooltip"></div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const addressElements = document.querySelectorAll('span.address');
@@ -68,13 +70,23 @@
             addressElement.addEventListener('click', function () {
                 const addressText = this.getAttribute('data-address');
                 navigator.clipboard.writeText(addressText).then(function () {
-                    alert("Address copied: " + addressText);
+                    showTooltip("Copied: " + addressText);
                 }).catch(function (error) {
-                    alert("Copy failed, please copy manually.");
+                    showTooltip("Copy failed, please copy manually.");
                     console.error("Copy failed: ", error);
                 });
             });
         });
+
+        function showTooltip(message) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerText = message;
+            tooltip.classList.add('show');
+
+            setTimeout(function () {
+                tooltip.classList.remove('show');
+            }, 2000);
+        }
     });
 </script>
 </body>
