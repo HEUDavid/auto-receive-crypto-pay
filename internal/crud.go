@@ -16,11 +16,11 @@ func GetInvoiceByAddress(c context.Context, db *gorm.DB, fromAddress string) ([]
 	return dataList, nil
 }
 
-func GetTokenDetails(c context.Context, db *gorm.DB, token string) (*ReceiptData, error) {
+func GetInvoiceDetails(c context.Context, db *gorm.DB, invoiceID string) (*ReceiptData, error) {
 	data := &ReceiptData{}
 	if err := db.Table((&ReceiptData{}).TableName()).
 		Omit("raw_data").
-		Where("token = ?", token).
+		Where("invoice_id = ?", invoiceID).
 		First(data).Error; err != nil {
 		return nil, err
 	}
