@@ -31,9 +31,10 @@
         <li>
             <span class="circle"></span>
             <a href="#">
-                <span class="network">{{ $network }}</span>:
+                <span class="network">{{ $network }}</span>
+                <span class="separator">:</span>
                 {{ range $index, $addressConfig := $addresses }}
-                {{ $addressConfig.Address }}
+                <span class="address">{{ $addressConfig.Address }}</span>
                 <img src="{{ $addressConfig.URL }}" alt="{{ $network }}">
                 {{ end }}
             </a>
@@ -46,8 +47,9 @@
         <li>
             <span class="circle"></span>
             <form action="{{  .hostRoot  }}/query_token" method="GET">
-                <label for="from_address" class="network">YOUR ADDRESS</label>:
-                <input type="text" id="from_address" name="from_address" placeholder="0x..." class="input_address">
+                <label for="from_address" class="network">YOUR ADDRESS</label>
+                <span class="separator">:</span>
+                <input type="text" id="from_address" name="from_address" placeholder="0x..." class="address">
                 <input type="submit" value="Query" class="query_button">
             </form>
         </li>
