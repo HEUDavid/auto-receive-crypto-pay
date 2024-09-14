@@ -88,7 +88,7 @@ func checkRequest(c *gin.Context, required ...string) (bool, string) {
 	return true, ""
 }
 
-func QueryToken(c *gin.Context) {
+func QueryInvoice(c *gin.Context) {
 	if valid, missingParam := checkRequest(c, "from_address"); !valid {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "missing required parameter: " + missingParam,
@@ -104,7 +104,7 @@ func QueryToken(c *gin.Context) {
 	response(c, err, tokens)
 }
 
-func TokenDetails(c *gin.Context) {
+func InvoiceDetails(c *gin.Context) {
 	if valid, missingParam := checkRequest(c, "token"); !valid {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "missing required parameter: " + missingParam,

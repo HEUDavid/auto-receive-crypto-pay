@@ -37,8 +37,8 @@ func main() {
 
 	r.POST(Router("webhook"), Webhook)
 	r.GET(Router("query"), QueryTask)
-	r.GET(Router("query_token"), QueryToken)
-	r.GET(Router("token_details"), TokenDetails)
+	r.GET(Router("query_token"), QueryInvoice)
+	r.GET(Router("token_details"), InvoiceDetails)
 
 	r.GET(Router("pay"), Index)
 
