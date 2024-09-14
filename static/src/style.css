@@ -123,7 +123,7 @@ form {
     padding-top: 2px;
     padding-bottom: 2px;
     border-radius: 3px;
-    border: 1px solid #000;
+    border: 0;
 }
 
 .query_button {
