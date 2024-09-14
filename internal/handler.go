@@ -104,7 +104,7 @@ func genTokenHandler(task *Task[*ReceiptData]) error {
 
 	// Invoke RPC interfaces to perform certain operations.
 	// 生成token或者发送商品卡密之类的
-	task.Data.Invoice = Worker.GenID()
+	task.Data.InvoiceID = Worker.GenID()
 
 	currentTime := time.Now()
 	timeAfter30Days := currentTime.AddDate(0, 0, 30)

@@ -66,7 +66,7 @@ func toToken(data *ReceiptData) *token {
 		return nil
 	}
 	return &token{
-		Token:           data.Invoice,
+		Token:           data.InvoiceID,
 		Valid:           isValid(data.ValidFrom, data.ValidTo),
 		ValidFrom:       time.Unix(int64(data.ValidFrom), 0),
 		ValidTo:         time.Unix(int64(data.ValidTo), 0),
