@@ -41,9 +41,8 @@ create table data
     id               bigint unsigned auto_increment
         primary key,
     task_id          char(32)                                  not null,
-    token            varchar(64)     default ''                not null,
-    valid_from       bigint unsigned default 0                 not null,
-    valid_to         bigint unsigned default 0                 not null,
+
+    -- 转账哈希
     network          varchar(16)     default ''                not null,
     hash             varchar(128)    default ''                not null,
     from_address     varchar(128)    default ''                not null,
@@ -51,6 +50,11 @@ create table data
     asset            varchar(32)     default ''                not null,
     value            decimal(50, 15) default 0.000000000000000 not null,
     raw_data         JSON,
+
+    -- 发票
+    invoice_id       varchar(64)     default ''                not null,
+    valid_from       bigint unsigned default 0                 not null,
+    valid_to         bigint unsigned default 0                 not null,
     transaction_time bigint unsigned default 0                 not null comment '业务时间',
     comment          varchar(128)    default ''                not null comment '备注说明'
 )
