@@ -48,6 +48,6 @@ func main() {
 	Worker.Run()
 	log.Println("[FSM] Worker started...")
 
-	log.Printf("Listening on %s%s", GetConfig().Global.Addr, GetConfig().Global.HostRoot)
+	log.Printf("[SERVICE] Listening on %s%s", GetConfig().Global.Addr, GetConfig().Global.HostRoot)
 	_ = r.Run(GetConfig().Global.Addr)
 }
