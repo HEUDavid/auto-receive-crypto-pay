@@ -127,7 +127,7 @@ func response(c *gin.Context, err error, task interface{}) {
 }
 
 func Index(c *gin.Context) {
-	c.HTML(200, "index.html", gin.H{
+	c.HTML(http.StatusOK, "index.html", gin.H{
 		"hostRoot":       GetConfig().Global.HostRoot,
 		"adminAddresses": GetConfig().AdminAddress,
 	})
