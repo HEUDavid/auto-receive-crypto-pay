@@ -136,6 +136,29 @@ form {
     color: white;
 }
 
+.tooltip {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 4vh;
+    position: fixed;
+    background-color: rgb(92 127 237 / 85%);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    text-align: center;
+    opacity: 0; /* 初始透明度为 0 */
+    visibility: hidden; /* 初始不可见 */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* 添加 visibility 的过渡 */
+    z-index: 1000;
+}
+
+.tooltip.show {
+    opacity: 1; /* 显示时的透明度为 1 */
+    visibility: visible; /* 显示时可见 */
+}
+
 .list li .circle::before {
     content: "•";
     vertical-align: middle
