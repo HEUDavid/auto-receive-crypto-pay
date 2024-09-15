@@ -17,16 +17,16 @@ var (
 	Hook      = GenState("Hook", false, hookHandler)
 	Processed = State[*ReceiptData]{Name: "Processed", IsFinal: true, Handler: nil}
 
-	// New 以"发送地址FromAddress"为键，启动自定义执行流程
-	New      = GenState("New", false, newHandler)
-	GenToken = GenState("GenToken", false, genTokenHandler)
-	End      = State[*ReceiptData]{Name: "End", IsFinal: true, Handler: nil}
+	// New 为"发送地址FromAddress"，启动执行流程，可以自行拓展
+	New        = GenState("New", false, newHandler)
+	GenInvoice = GenState("GenInvoice", false, genInvoiceHandler)
+	End        = State[*ReceiptData]{Name: "End", IsFinal: true, Handler: nil}
 )
 
 var (
 	Hook2Processed = GenTransition(Hook, Processed)
-	New2GenToken   = GenTransition(New, GenToken)
-	GenToken2End   = GenTransition(GenToken, End)
+	New2GenInvoice = GenTransition(New, GenInvoice)
+	GenInvoice2End = GenTransition(GenInvoice, End)
 )
 
 var ReceiptFSM = func() FSM[*ReceiptData] {
@@ -35,8 +35,8 @@ var ReceiptFSM = func() FSM[*ReceiptData] {
 	fsm.RegisterState(Hook, Processed)
 	fsm.RegisterTransition(Hook2Processed)
 
-	fsm.RegisterState(New, GenToken, End)
-	fsm.RegisterTransition(New2GenToken, GenToken2End)
+	fsm.RegisterState(New, GenInvoice, End)
+	fsm.RegisterTransition(New2GenInvoice, GenInvoice2End)
 	return fsm
 }()
 
@@ -44,14 +44,13 @@ func hookHandler(task *Task[*ReceiptData]) error {
 	log.Printf("[FSM] State: %s, Task.Data: %s", task.State, _pretty(task.GetData()))
 	task.Data.Comment = "webhook payload"
 
-	// 检查数据，根据合法收据建立新的任务
 	// log.Println(_pretty((*task.GetData()).RawData))
-
 	var rawData parser.WebhookData
 	if err := json.Unmarshal((*task.GetData()).RawData, &rawData); err != nil {
 		fmt.Println("json.Unmarshal error: ", err)
 	}
 
+	// 检查数据，根据链上交易信息创建任务
 	addressConfig, exists := GetConfig().AdminAddress[rawData.Event.Network]
 	if !exists {
 		task.Data.Comment = "no relevant network is configured"
@@ -81,7 +80,7 @@ func hookHandler(task *Task[*ReceiptData]) error {
 		}})
 		logicTask.Type = "Logic"
 		logicTask.State = New.GetName()
-		if err := Adapter.Create(context.TODO(), logicTask); err != nil {
+		if err := Adapter.Create(context.Background(), logicTask); err != nil {
 			log.Printf("[FSM] Create logic task error: %s", err)
 			return err
 		}
@@ -94,16 +93,22 @@ func hookHandler(task *Task[*ReceiptData]) error {
 
 func newHandler(task *Task[*ReceiptData]) error {
 	log.Printf("[FSM] State: %s, Task.Data: %s", task.State, _pretty(task.GetData()))
+
+	// It may be necessary to perform some checks.
+	// It may be necessary to pre-record the request to the database to ensure idempotency.
+	// For example, generating some request IDs.
+	// ...
+
 	task.Data.Comment = "receive cryptocurrency"
-	task.State = GenToken.GetName() // 下一步 执行一些动作
+	task.State = GenInvoice.GetName() // 下一步：譬如生成发票
 	return nil
 }
 
-func genTokenHandler(task *Task[*ReceiptData]) error {
+func genInvoiceHandler(task *Task[*ReceiptData]) error {
 	log.Printf("[FSM] State: %s, Task: %s", task.State, _pretty(task))
 
 	// Invoke RPC interfaces to perform certain operations.
-	// 生成token或者发送商品卡密之类的
+	// Here we generate the ID directly.
 	task.Data.InvoiceID = Worker.GenID()
 
 	currentTime := time.Now()
@@ -111,9 +116,10 @@ func genTokenHandler(task *Task[*ReceiptData]) error {
 	task.Data.ValidFrom = uint64(currentTime.Unix())
 	task.Data.ValidTo = uint64(timeAfter30Days.Unix())
 
+	// Maybe some notifications need to be sent
 	log.Println("send mail...")
-	task.Data.Comment = "send mail success"
 
+	task.Data.Comment = "gen invoice success"
 	task.State = End.GetName() // Switch to next state
 	return nil
 }
