@@ -1,5 +1,5 @@
 <h1 align="center">Auto Receive Crypto Pay</h1>
-<h4 align="center">加密货币收款服务，直接的点对点接收，到账后自动执行动作，自托管。</h4>
+<h4 align="center">加密货币收款，点对点接收，实时监听到账，自托管。</h4>
 
 #### 中文 | English
 
@@ -8,11 +8,11 @@
 当 `入账地址ToAddress` 收到加密货币后， `Node Services` 回调 `https://your_domain/webhook` 接口，
 先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成发票收据、相关订阅token、发送虚拟商品卡密等)。
 
-<img src="./docs/assets/receipt.svg" alt="ReceiptFSM" width="600"/>
+<img src="./docs/assets/receipt.svg" alt="ReceiptFSM" width="600px"/>
 
 收款与查询页面：https://api.mdavid.cn/gin/pay
 
-<img src="./docs/assets/index.png" alt="Index" width="800"/>
+<img src="./docs/assets/index.png" alt="Index" width="800px"/>
 
 ## 特点
 - 完全地点对点收款，无传统的中间平台
