@@ -116,7 +116,12 @@ port = 5672
 queue = "your_queue"
 ```
 
+## DB初始化
+
+[init.sql](./model/init.sql)
+
 ## 从源码构建
+
 假设您已经安装了 Go，那么可以打开命令行界面，执行如下命令：
 ```shell
 git clone https://github.com/HEUDavid/auto-receive-crypto-pay.git
