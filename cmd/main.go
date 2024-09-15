@@ -37,10 +37,10 @@ func main() {
 
 	r.POST(Router("webhook"), Webhook)
 	r.GET(Router("query_task"), QueryTask)
-	r.GET(Router("query_invoice"), QueryInvoice)
-	r.GET(Router("invoice_details"), InvoiceDetails)
 
 	r.GET(Router("pay"), Index)
+	r.GET(Router("query_invoice"), QueryInvoice)
+	r.GET(Router("invoice_details"), InvoiceDetails)
 
 	r.Static(Router("src"), Source("static/src"))
 	r.LoadHTMLGlob(Source("static/templates/*"))
