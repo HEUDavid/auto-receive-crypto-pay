@@ -6,7 +6,7 @@
 ## 简介
 通过[流行的节点服务](https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services)监听地址转账活动，
 当 `入账地址ToAddress` 收到加密货币后， `Node Services` 回调 `https://your_domain/webhook` 接口，
-先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成发票收据、相关订阅token、发送虚拟商品卡密等)。
+先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成发票收据、生成相关订阅token、发送虚拟商品卡密等)。
 
 <img src="./docs/assets/receipt.svg" alt="ReceiptFSM" width="600px"/>
 
@@ -138,7 +138,7 @@ go build cmd/main.go
     1. 用户在您的网站注册，并绑定用户的支付地址(类似于传统的收集用户的支付信息)
     2. 展示管理员收款信息(收款地址、网络、币种)
     3. 用户自行发起转账动作
-    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成发票收据、相关订阅token、发送虚拟商品卡密等)
+    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成发票收据、生成相关订阅token、发送虚拟商品卡密等)
 
 # 可靠性说明
 参看 `go-fsm框架` [说明](https://github.com/HEUDavid/go-fsm?tab=readme-ov-file#reliability-statement)
