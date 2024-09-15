@@ -112,7 +112,7 @@ func InvoiceDetails(c *gin.Context) {
 		return
 	}
 
-	data, err := GetTokenDetails(c, Adapter.GetDB(), c.Query("token"))
+	data, err := GetInvoiceDetails(c, Adapter.GetDB(), c.Query("invoice"))
 	response(c, err, toToken(data))
 }
 
