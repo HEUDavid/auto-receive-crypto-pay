@@ -43,17 +43,18 @@ func QueryTask(c *gin.Context) {
 	response(c, Adapter.Query(c, task), task)
 }
 
-type token struct {
-	Token           string
-	Valid           bool
-	ValidFrom       time.Time
-	ValidTo         time.Time
+type invoice struct {
 	Network         string
 	FromAddress     string
 	ToAddress       string
 	Asset           string
 	Value           float64
+	InvoiceID       string
+	ValidFrom       time.Time
+	ValidTo         time.Time
 	TransactionTime time.Time
+	Content         string
+	Valid           bool
 }
 
 func isValid(validFrom, validTo uint64) bool {
@@ -61,21 +62,22 @@ func isValid(validFrom, validTo uint64) bool {
 	return currentTime >= validFrom && currentTime <= validTo
 }
 
-func toToken(data *ReceiptData) *token {
+func toInvoice(data *ReceiptData) *invoice {
 	if data == nil {
 		return nil
 	}
-	return &token{
-		Token:           data.InvoiceID,
-		Valid:           isValid(data.ValidFrom, data.ValidTo),
-		ValidFrom:       time.Unix(int64(data.ValidFrom), 0),
-		ValidTo:         time.Unix(int64(data.ValidTo), 0),
+	return &invoice{
 		Network:         data.Network,
 		FromAddress:     data.FromAddress,
 		ToAddress:       data.ToAddress,
 		Asset:           data.Asset,
 		Value:           data.Value,
+		InvoiceID:       data.InvoiceID,
+		ValidFrom:       time.Unix(int64(data.ValidFrom), 0),
+		ValidTo:         time.Unix(int64(data.ValidTo), 0),
 		TransactionTime: time.Unix(int64(data.TransactionTime), 0),
+		Content:         data.InvoiceID,
+		Valid:           isValid(data.ValidFrom, data.ValidTo),
 	}
 }
 
@@ -97,15 +99,15 @@ func QueryInvoice(c *gin.Context) {
 	}
 
 	dataList, err := GetInvoiceByAddress(c, Adapter.GetDB(), c.Query("from_address"))
-	var tokens []*token
+	var invoices []*invoice
 	for _, data := range dataList {
-		tokens = append(tokens, toToken(data))
+		invoices = append(invoices, toInvoice(data))
 	}
-	response(c, err, tokens)
+	response(c, err, invoices)
 }
 
 func InvoiceDetails(c *gin.Context) {
-	if valid, missingParam := checkRequest(c, "token"); !valid {
+	if valid, missingParam := checkRequest(c, "invoice"); !valid {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "missing required parameter: " + missingParam,
 		})
@@ -113,7 +115,7 @@ func InvoiceDetails(c *gin.Context) {
 	}
 
 	data, err := GetInvoiceDetails(c, Adapter.GetDB(), c.Query("invoice"))
-	response(c, err, toToken(data))
+	response(c, err, toInvoice(data))
 }
 
 func response(c *gin.Context, err error, task interface{}) {
