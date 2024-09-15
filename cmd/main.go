@@ -36,9 +36,9 @@ func main() {
 	r := gin.Default()
 
 	r.POST(Router("webhook"), Webhook)
-	r.GET(Router("query"), QueryTask)
-	r.GET(Router("query_token"), QueryInvoice)
-	r.GET(Router("token_details"), InvoiceDetails)
+	r.GET(Router("query_task"), QueryTask)
+	r.GET(Router("query_invoice"), QueryInvoice)
+	r.GET(Router("invoice_details"), InvoiceDetails)
 
 	r.GET(Router("pay"), Index)
 
