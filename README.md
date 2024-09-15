@@ -6,11 +6,12 @@
 ## 简介
 通过[流行的节点服务](https://ethereum.org/en/developers/docs/nodes-and-clients/nodes-as-a-service/#popular-node-services)监听地址转账活动，
 当 `入账地址ToAddress` 收到加密货币后， `Node Services` 回调 `https://your_domain/webhook` 接口，
-先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成相关订阅token，发送商品卡密等）。
+先对回调请求落库，然后检查并进行地址匹配，为 `发送地址FromAddress` 执行一些逻辑(譬如：生成发票收据、相关订阅token、发送虚拟商品卡密等)。
 
 <img src="./docs/assets/receipt.svg" alt="ReceiptFSM" width="600"/>
 
 收款与查询页面：https://api.mdavid.cn/gin/pay
+
 <img src="./docs/assets/index.png" alt="Index" width="800"/>
 
 ## 特点
@@ -21,6 +22,8 @@
 - 开源，自托管，完全控制
 - 支持多种网络，多种加密货币
   - 实际上您只需自行选择节点服务商，配置回调地址即可
+- 无钱包集成
+  - 在我看来，钱包授权行为可能会给用户资产带来风险，因此该项目是 `push payment system`
 
 ## 快速使用
 ```shell
@@ -30,9 +33,6 @@ mkdir -p receivepay && tar -xzf receivepay-linux-amd64.tar.gz -C receivepay
 
 # 修改配置
 cp conf.toml.example conf.toml
-
-# 日志路径
-mkdir -p receivepay/log
 
 ./receivepay-linux-amd64
 ```
@@ -57,23 +57,25 @@ curl -X POST http://localhost:8080/webhook?auth=auth_key \
 ```
 
 ```sh
-# 根据转账地址查询 token
+# 根据转账地址查询 invoice
 bash -c 'curl -s "$1" | python -m json.tool' \
-     -- "http://localhost:8080/query_token?from_address=0x71660c4005ba85c37ccec55d0c4493e66fe775d3"
+     -- "http://localhost:8080/query_invoice?from_address=0x71660c4005ba85c37ccec55d0c4493e66fe775d3"
 ```
 ```shell
 # response:
 [
   {
-    "Token": "942ef637afad1f6ac3860c4dd8a0ff74",
-    "ValidFrom": "2024-09-12T12:55:49+08:00",
-    "ValidTo": "2024-10-12T12:55:49+08:00",
     "Network": "ETH_MAINNET",
     "FromAddress": "0x71660c4005ba85c37ccec55d0c4493e66fe775d3",
     "ToAddress": "0x950a4e3beb32d3862272592c8bae79fb5f3475db",
     "Asset": "USDC",
     "Value": 2400,
-    "TransactionTime": "2024-09-12T12:55:45+08:00"
+    "InvoiceID": "50fbbb33a3ec9865f79b5a0235ef5e42",
+    "ValidFrom": "2024-09-15T09:11:00+08:00",
+    "ValidTo": "2024-10-15T09:11:00+08:00",
+    "TransactionTime": "2024-09-15T09:10:55+08:00",
+    "Content": "50fbbb33a3ec9865f79b5a0235ef5e42",
+    "Valid": true
   }
 ]
 ```
@@ -133,10 +135,10 @@ go build cmd/main.go
   - 核心逻辑定义 fsm 状态机，增加对应节点及其状态处理器
 - 我想嵌入到我的电子商务网站中
   - 二次开发接入到您的订阅服务或者电子商务网站中，为网站支持接收加密货币付款渠道，简要流程参考：
-    1. 用户在您的网站注册，并绑定用户的支付地址
-    2. 展示管理员支付信息(收款地址、网络、币种)
+    1. 用户在您的网站注册，并绑定用户的支付地址(类似于传统的收集用户的支付信息)
+    2. 展示管理员收款信息(收款地址、网络、币种)
     3. 用户自行发起转账动作
-    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成相关订阅token，发送商品卡密等)
+    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成发票收据、相关订阅token、发送虚拟商品卡密等)
 
 # 可靠性说明
 参看 `go-fsm框架` [说明](https://github.com/HEUDavid/go-fsm?tab=readme-ov-file#reliability-statement)
