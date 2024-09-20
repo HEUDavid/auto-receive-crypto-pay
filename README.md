@@ -38,7 +38,7 @@ cp conf.toml.example conf.toml
 ./receivepay-linux-amd64
 ```
 
-搭配 nginx
+搭配 nginx，注意 `location /gin` `http://127.0.0.1:8080` 与 配置文件中 `hostRoot` `addr` 保持一致
 ```conf
 location /gin {
     proxy_pass http://127.0.0.1:8080;
@@ -48,7 +48,6 @@ location /gin {
     proxy_set_header X-Forwarded-Proto $scheme;
 }
 ```
-注意 `location /gin` `http://127.0.0.1:8080` 与 配置文件中 `hostRoot` `addr` 保持一致
 
 接口测试
 ```sh
@@ -129,11 +128,11 @@ queue = "your_queue"
 git clone https://github.com/HEUDavid/auto-receive-crypto-pay.git
 cd auto-receive-crypto-pay
 
+# 交叉编译参看Golang官方文档
 go build cmd/main.go
 
 ./main
 ```
-交叉编译参看Golang官方文档
 
 ## 二次开发
 - 我想拓展一些能力
