@@ -34,10 +34,11 @@ mkdir -p receivepay && tar -xzf receivepay-linux-amd64.tar.gz -C receivepay
 # 修改配置
 cp conf.toml.example conf.toml
 
+# 启动进程
 ./receivepay-linux-amd64
 ```
 
-搭配 nginx，注意 `location /gin` `http://127.0.0.1:8080` 和 配置文件中 `hostRoot` `addr` 保持一致
+搭配 nginx
 ```conf
 location /gin {
     proxy_pass http://127.0.0.1:8080;
@@ -47,6 +48,7 @@ location /gin {
     proxy_set_header X-Forwarded-Proto $scheme;
 }
 ```
+注意 `location /gin` `http://127.0.0.1:8080` 与 配置文件中 `hostRoot` `addr` 保持一致
 
 接口测试
 ```sh
@@ -79,7 +81,7 @@ bash -c 'curl -s "$1" | python -m json.tool' \
   }
 ]
 ```
-也可以通过 `Node Service` dashboard 发送测试消息来测试
+也可以通过 `Node Service` Dashboard 发送测试消息来测试
 
 ## 配置文件
 ```toml
@@ -127,10 +129,8 @@ queue = "your_queue"
 git clone https://github.com/HEUDavid/auto-receive-crypto-pay.git
 cd auto-receive-crypto-pay
 
-# 编译
 go build cmd/main.go
 
-# 运行
 ./main
 ```
 交叉编译参看Golang官方文档
