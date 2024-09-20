@@ -3,15 +3,16 @@ module github.com/HEUDavid/auto-receive-crypto-pay
 go 1.22
 
 require (
-	github.com/HEUDavid/go-fsm v0.0.2-0.20240909193131-becdbc6158b0
+	github.com/BurntSushi/toml v1.4.0
+	github.com/HEUDavid/go-fsm v1.0.0
 	github.com/gin-gonic/gin v1.10.0
 	gorm.io/datatypes v1.2.1
+	gorm.io/gorm v1.25.11
 )
 
 require (
 	cdr.dev/slog v1.4.2-0.20221206192828-e4803b10ae17 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
-	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/PuerkitoBio/goquery v1.8.1 // indirect
 	github.com/alecthomas/chroma v0.10.0 // indirect
 	github.com/alecthomas/chroma/v2 v2.5.0 // indirect
@@ -66,7 +67,6 @@ require (
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.5.7 // indirect
-	gorm.io/gorm v1.25.11 // indirect
 	oss.terrastruct.com/d2 v0.6.5 // indirect
 	oss.terrastruct.com/util-go v0.0.0-20231101220827-55b3812542c2 // indirect
 )
