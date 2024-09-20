@@ -148,15 +148,15 @@ form {
     font-family: monospace;
     font-size: 12px;
     text-align: center;
-    opacity: 0; /* 初始透明度为 0 */
-    visibility: hidden; /* 初始不可见 */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* 添加 visibility 的过渡 */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 1000;
 }
 
 .tooltip.show {
-    opacity: 1; /* 显示时的透明度为 1 */
-    visibility: visible; /* 显示时可见 */
+    opacity: 1;
+    visibility: visible;
 }
 
 .list li .circle::before {
