@@ -217,6 +217,7 @@ form {
 
     .list-container h2 {
         font-size: 13pt;
+        padding-left: 13px;
     }
 
     .list {
@@ -224,7 +225,6 @@ form {
     }
 
     .list li {
-        font-size: 15px;
         padding: 4px 13px 4px 13px
     }
 
