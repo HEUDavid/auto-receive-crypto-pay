@@ -41,7 +41,7 @@ body {
     max-height: 38vh;
     list-style: none;
     overflow-y: auto;
-    padding: 0 0 15px;
+    padding: 0 0 15px
 }
 
 .list li {
@@ -76,7 +76,7 @@ body {
 
 .list li a {
     text-decoration: none;
-    color: inherit;
+    color: inherit
 }
 
 .list li a img {
@@ -87,31 +87,31 @@ body {
     transform: translate(0, -50%);
     width: 250px;
     height: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
 }
 
 .list li a:hover img {
-    display: block;
+    display: block
 }
 
 .network {
     width: 8em;
     display: inline-block;
-    color: #494277;
+    color: #494277
 }
 
 form {
-    font-family: monospace;
+    font-family: monospace
 }
 
 ::placeholder {
     font-size: 12px;
     font-family: monospace;
-    color: #656565;
+    color: #656565
 }
 
 .separator {
-    display: inline;
+    display: inline
 }
 
 .address {
@@ -122,7 +122,7 @@ form {
     padding-top: 2px;
     padding-bottom: 2px;
     border-radius: 3px;
-    border: 0;
+    border: 0
 }
 
 .query_button {
@@ -133,7 +133,7 @@ form {
     border-radius: 3px;
     border: 0;
     background: rgb(26, 115, 232);
-    color: white;
+    color: white
 }
 
 .tooltip {
@@ -151,12 +151,12 @@ form {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 1000;
+    z-index: 1000
 }
 
 .tooltip.show {
     opacity: 1;
-    visibility: visible;
+    visibility: visible
 }
 
 .list li .circle::before {
@@ -197,13 +197,13 @@ form {
 
 @media only screen and (max-height: 400px) {
     .footer {
-        display: none;
+        display: none
     }
 }
 
 @media only screen and (max-width: 600px) {
     .network {
-        width: 7.3rem;
+        width: 7.3rem
     }
 
     .list-container {
@@ -217,11 +217,11 @@ form {
 
     .list-container h2 {
         font-size: 13pt;
-        padding-left: 13px;
+        padding-left: 13px
     }
 
     .list {
-        max-height: 52vh;
+        max-height: 52vh
     }
 
     .list li {
