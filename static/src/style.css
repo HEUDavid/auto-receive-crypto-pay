@@ -229,6 +229,7 @@ form {
     }
 
     .list li .circle {
+        display: none;
         margin-right: 2px;
         font-size: 0.80em
     }
