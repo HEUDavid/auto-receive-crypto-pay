@@ -51,7 +51,7 @@ location /gin {
 
 接口测试
 ```sh
-# webhook 回调(做好安全防护)
+# webhook 回调(配置到Node Services, 做好安全防护)
 curl -X POST http://localhost:8080/webhook?auth=auth_key \
      -H "Content-Type: application/json" \
      --data @data/Test_ETH_MAINNET.json
