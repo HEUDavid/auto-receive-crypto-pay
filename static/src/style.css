@@ -195,7 +195,7 @@ form {
     color: #494277
 }
 
-@media only screen and (max-height: 400px) {
+@media only screen and (max-height: 460px) {
     .footer {
         display: none
     }
