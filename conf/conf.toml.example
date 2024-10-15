@@ -16,17 +16,17 @@ ETH_MAINNET = [
 [mysql]
 user = "your_user"
 password = "your_password"
-host = "gateway01.ap-northeast-1.prod.aws.tidbcloud.com"
+host = "gateway01.ap-northeast-1.prod.aws.tidbcloud.com"  # 作者使用的是 https://tidbcloud.com 提供的免费版mysql云服务
 port = 4000
 dbName = "your_db"
 maxIdleConns = 10
 maxOpenConns = 100
-tls = true
+tls = true  # 是否启用TLS: true或false，请根据自己的mysql服务器配置
 
 [rmq]
 user = "your_user"
 password = "your_password"
-host = "cougar.rmq.cloudamqp.com"
+host = "cougar.rmq.cloudamqp.com"  # 作者使用的是 https://customer.cloudamqp.com 提供的免费版rabbitmq云服务
 vhost = "/psnbxfjg"
 port = 5672
 queue = "your_queue"
