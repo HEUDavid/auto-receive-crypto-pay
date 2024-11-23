@@ -139,10 +139,11 @@ go build cmd/main.go
   - 核心逻辑定义 fsm 状态机，增加对应节点及其状态处理器
 - 我想嵌入到我的电子商务网站中
   - 二次开发接入到您的订阅服务或者电子商务网站中，为网站支持接收加密货币付款渠道，简要流程参考：
-    1. 用户在您的网站注册，并绑定用户的支付地址(类似于传统的收集用户的支付信息)
-    2. 展示管理员收款信息(收款地址、网络、币种)
+    1. 用户在您的网站注册，绑定用户的支付地址(类似于传统的收集用户的支付信息)
+    2. 展示管理员收款信息(收款地址、网络、币种)，拉起收款页
     3. 用户自行发起转账动作
-    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `发送地址FromAddress` 执行逻辑(生成发票收据、生成相关订阅token、发送虚拟商品卡密等)
+    4. 转账成功，`Auto Receive Crypto Pay` 接到 `Node Services` 回调，为 `支付地址FromAddress` 执行逻辑(生成发票收据、生成相关订阅token、发送虚拟商品卡密等)
+- 如果有其他需求，欢迎提 issue 讨论 :)
 
 # 可靠性说明
 参看 `go-fsm框架` [说明](https://github.com/HEUDavid/go-fsm?tab=readme-ov-file#reliability-statement)
