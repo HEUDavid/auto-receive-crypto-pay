@@ -1,10 +1,10 @@
 module github.com/HEUDavid/auto-receive-crypto-pay
 
-go 1.22
+go 1.23.3
 
 require (
 	github.com/BurntSushi/toml v1.4.0
-	github.com/HEUDavid/go-fsm v1.0.0
+	github.com/HEUDavid/go-fsm v1.0.1
 	github.com/gin-gonic/gin v1.10.0
 	gorm.io/datatypes v1.2.1
 	gorm.io/gorm v1.25.11
