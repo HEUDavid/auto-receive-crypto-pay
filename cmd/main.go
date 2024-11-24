@@ -27,7 +27,6 @@ func init() {
 	mw := io.MultiWriter(os.Stdout, f)
 	gin.DefaultWriter = mw
 	log.SetOutput(mw)
-
 }
 
 func main() {
@@ -42,6 +41,9 @@ func main() {
 
 	r.Static(Router("src"), Source("static/src"))
 	r.LoadHTMLGlob(Source("static/templates/*"))
+
+	Worker.DoInit()
+	Adapter.DoInit()
 
 	Worker.Run()
 	log.Println("[FSM] Worker started...")

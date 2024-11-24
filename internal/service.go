@@ -83,8 +83,3 @@ var (
 	Worker  = NewWorker()
 	Adapter = NewAdapter()
 )
-
-func init() {
-	Worker.DoInit()
-	Adapter.DoInit()
-}
