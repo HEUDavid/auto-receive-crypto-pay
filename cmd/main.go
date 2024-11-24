@@ -50,4 +50,5 @@ func main() {
 
 	log.Printf("[SERVICE] Listening on %s%s", GetConfig().Global.Addr, GetConfig().Global.HostRoot)
 	_ = r.Run(GetConfig().Global.Addr)
+
 }
