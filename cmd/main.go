@@ -28,8 +28,6 @@ func init() {
 	gin.DefaultWriter = mw
 	log.SetOutput(mw)
 
-	InitWorker()
-	InitAdapter()
 }
 
 func main() {

@@ -9,8 +9,8 @@ git.sr.ht/~sbinet/gg v0.5.0/go.mod h1:G2C0eRESqlKhS7ErsNey6HHrqU1PwsnCQlekFi9Q2O
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/toml v1.4.0 h1:kuoIxZQy2WRRk1pttg9asf+WVv6tWQuBNVmK8+nqPr0=
 github.com/BurntSushi/toml v1.4.0/go.mod h1:ukJfTF/6rtPPRCnwkur4qwRxa8vTRFBF0uk2lLoLwho=
-github.com/HEUDavid/go-fsm v1.0.1 h1:AqEIkhlEK7XpafjHEl/VX473+Eur+KGaXKu3NRorkd4=
-github.com/HEUDavid/go-fsm v1.0.1/go.mod h1:SZoEx+5TDCVle8FWV5eplcwIOxHXGfOra2W3jobLGYY=
+github.com/HEUDavid/go-fsm v1.0.2 h1:D21aU+I2ppUDuzg2UuWL+9PL7OKAHUiIvu1crz14n1g=
+github.com/HEUDavid/go-fsm v1.0.2/go.mod h1:SZoEx+5TDCVle8FWV5eplcwIOxHXGfOra2W3jobLGYY=
 github.com/PuerkitoBio/goquery v1.8.1 h1:uQxhNlArOIdbrH1tr0UXwdVFgDcZDrZVdcpygAcwmWM=
 github.com/PuerkitoBio/goquery v1.8.1/go.mod h1:Q8ICL1kNUJ2sXGoAhPGUdYDJvgQgHzJsnnd3H7Ho5jQ=
 github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b h1:slYM766cy2nI3BwyRiyQj/Ud48djTMtMebDqepE95rw=
