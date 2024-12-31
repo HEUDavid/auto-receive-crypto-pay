@@ -11,9 +11,7 @@ import (
 	"path/filepath"
 )
 
-func init() {
-	gin.SetMode(GetConfig().Global.Mode)
-
+func setupLog() {
 	logPath := filepath.Join(util.FindProjectRoot(), GetConfig().Global.LogPath)
 	if err := os.MkdirAll(filepath.Dir(logPath), os.ModePerm); err != nil {
 		panic(fmt.Sprintf("Failed to create log directory: %v", err))
@@ -27,6 +25,14 @@ func init() {
 	mw := io.MultiWriter(os.Stdout, f)
 	gin.DefaultWriter = mw
 	log.SetOutput(mw)
+
+	log.SetPrefix("[Auto Receive Crypto Pay] ")
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+}
+
+func init() {
+	gin.SetMode(GetConfig().Global.Mode)
+	setupLog()
 }
 
 func main() {
@@ -46,9 +52,9 @@ func main() {
 	Adapter.DoInit()
 
 	Worker.Run()
-	log.Println("[FSM] Worker started...")
+	log.Println("[FSM] worker started...")
 
-	log.Printf("[SERVICE] Listening on %s%s", GetConfig().Global.Addr, GetConfig().Global.HostRoot)
+	log.Printf("[SERVICE] listening on %s%s", GetConfig().Global.Addr, GetConfig().Global.HostRoot)
 	_ = r.Run(GetConfig().Global.Addr)
 
 }
