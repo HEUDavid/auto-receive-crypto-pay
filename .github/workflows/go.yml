@@ -75,6 +75,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: release-packages
+          merge-multiple: true
 
       - name: Create Release
         id: create_release
