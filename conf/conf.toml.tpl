@@ -9,7 +9,7 @@ auth = "abc"                  # auth_key
 
 [adminAddress]  # 管理员收款地址: (网络：<地址，图片链接>)
 MATIC_MAINNET = [
-    { address = "0x950a4e3beb32d3862272592c8bae79fb5f3475db", url = "https://api.mdavid.cn/gin/src/MATIC.JPG" }
+    { address = "0x0000000000000000000000000000000000000000", url = "https://api.mdavid.cn/gin/src/MATIC.JPG" }
 ]
 ETH_MAINNET = [
     { address = "0x950a4e3beb32d3862272592c8bae79fb5f3475db", url = "https://api.mdavid.cn/gin/src/ETH.JPG" }
@@ -18,17 +18,17 @@ ETH_MAINNET = [
 [mysql]
 user = "${DB_USER}"
 password = "${DB_PWD}"
-host = "gateway01.ap-southeast-1.prod.aws.tidbcloud.com"     # 作者使用的是 https://tidbcloud.com 提供的免费版mysql云服务
+host = "gateway01.ap-southeast-1.prod.aws.tidbcloud.com"
 port = 4000
 dbName = "${DB_NAME}"
 maxIdleConns = 10
 maxOpenConns = 100
-tls = true                                                   # 是否启用TLS: true或false，请根据自己的mysql服务器配置
+tls = true
 
 [rmq]
 user = "${MQ_USER}"
-password = "${MQ_PWD}"
-host = "armadillo.rmq.cloudamqp.com"                         # 作者使用的是 https://customer.cloudamqp.com 提供的免费版rabbitmq云服务
 vhost = "/${MQ_VHOST}"
+password = "{MQ_PWD}"
+host = "armadillo.rmq.cloudamqp.com"
 port = 5672
-queue = "pay"
+queue = "receipt"
