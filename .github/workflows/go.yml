@@ -1,7 +1,7 @@
 name: Go Cross-Platform Build and Release
 
 permissions:
-  contents: write  # Ensure permission to write to release
+  contents: write
 
 on:
   push:
@@ -14,68 +14,64 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [ linux, windows, darwin ]  # Supported OS
-        goarch: [ amd64, arm64 ]          # Supported architectures
+        goos: [ linux, windows, darwin ]
+        goarch: [ amd64, arm64 ]
     steps:
-      - uses: actions/checkout@v4  # Checkout code
+      - uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.23.3'  # Set Go version
+          go-version: '1.23.3'
 
-      - name: Build and Package
+      - name: Build binaries
         run: |
-          BINARY_NAME="receivepay-${{ matrix.goos }}-${{ matrix.goarch }}"
-          if [ "${{ matrix.goos }}" == "windows" ]; then
-            BINARY_NAME="${BINARY_NAME}.exe"
-          fi
+          mkdir -p all-builds
+          for GOOS in linux windows darwin; do
+            for GOARCH in amd64 arm64; do
+              BINARY_NAME="receivepay-${GOOS}-${GOARCH}"
+              if [ "$GOOS" == "windows" ]; then
+                BINARY_NAME="${BINARY_NAME}.exe"
+              fi
+              echo "Building $BINARY_NAME ..."
+              GOOS=$GOOS GOARCH=$GOARCH go build -v -o all-builds/$BINARY_NAME ./cmd
+            done
+          done
 
-          # Build the binary
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -v -o ${BINARY_NAME} ./cmd
+      - name: Copy conf, static and go.mod
+        run: |
+          cp -r conf static go.mod all-builds/ || true
 
-          # Create a directory for packaging
-          mkdir -p release-package
+      - name: Package all builds
+        run: |
+          tar -czf release-package.tar.gz -C all-builds .
+          chmod +x all-builds/* || true
 
-          # Copy binary, conf, static, and go.mod
-          cp ${BINARY_NAME} release-package/
-          cp -r conf static release-package/
-          cp go.mod release-package/
-
-          # Package the files
-          if [ "${{ matrix.goos }}" == "windows" ]; then
-            zip -r ${BINARY_NAME}.zip release-package
-          else
-            tar -czf ${BINARY_NAME}.tar.gz -C release-package .
-          fi
-
-          # Set execute permissions for Unix-like systems
-          if [ "${{ matrix.goos }}" != "windows" ]; then
-            chmod +x release-package/${BINARY_NAME}
-          fi
-
-      - name: Upload artifacts
+      - name: Upload single artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release-packages-${{ matrix.goos }}-${{ matrix.goarch }}-${{ github.run_id }}
-          path: |
-            *.zip
-            *.tar.gz
+          name: release-package
+          path: release-package.tar.gz
 
   create_release:
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Only run on push to main
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history for all tags and branches
+          fetch-depth: 0
 
-      - name: Download artifacts
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: release-packages
-          merge-multiple: true
+          name: release-package
+          path: release-package
+
+      - name: Extract package
+        run: |
+          mkdir -p release-package/all
+          tar -xzf release-package/release-package.tar.gz -C release-package/all
 
       - name: Create Release
         id: create_release
@@ -88,7 +84,7 @@ jobs:
 
           Instructions: https://github.com/HEUDavid/auto-receive-crypto-pay"
 
-          gh release create $TAG_NAME *.zip *.tar.gz \
+          gh release create $TAG_NAME release-package/all/* \
             --title "Release $TAG_NAME" \
             --notes "$RELEASE_NOTES" \
             --draft=false
