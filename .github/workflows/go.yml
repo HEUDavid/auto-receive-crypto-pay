@@ -60,32 +60,58 @@ jobs:
 
       - name: Prepare Release Assets
         run: |
-          mkdir -p release-assets
+          # Create individual packages for each platform
+          mkdir -p release-packages
           
-          # Move binaries to release-assets
-          # download-artifact downloads into subdirectories by default (e.g. all-artifacts/binary-linux-amd64/receivepay-linux-amd64)
-          # We want to flatten them or just move them.
-          find all-artifacts -type f -name "receivepay-*" -exec cp {} release-assets/ \;
+          # Find all binaries in all-artifacts
+          # Structure is likely: all-artifacts/binary-linux-amd64/receivepay-linux-amd64
+          # We want to iterate and package them.
           
-          # Copy static resources
-          cp -r conf static go.mod release-assets/
+          # We know the matrix: linux/amd64, linux/arm64, windows/amd64, windows/arm64, darwin/amd64, darwin/arm64
+          platforms=("linux/amd64" "linux/arm64" "windows/amd64" "windows/arm64" "darwin/amd64" "darwin/arm64")
           
-          # List assets for verification
-          ls -R release-assets
-
-      - name: Create Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          TAG_NAME=$(date +'v%Y.%m.%d-%H%M%S')
-          echo "Creating release $TAG_NAME"
+          for platform in "${platforms[@]}"; do
+            os=$(echo $platform | cut -d'/' -f1)
+            arch=$(echo $platform | cut -d'/' -f2)
+            
+            # Construct binary name based on build job
+            bin_name="receivepay-${os}-${arch}"
+            if [ "$os" == "windows" ]; then
+              bin_name="${bin_name}.exe"
+            fi
+            
+            # Find the binary file
+            bin_path=$(find all-artifacts -name "$bin_name" -type f | head -n 1)
+            
+            if [ -z "$bin_path" ]; then
+              echo "Warning: Binary for $platform not found at $bin_name"
+              continue
+            fi
+            
+            echo "Packaging $platform from $bin_path..."
+            
+            # Create a temporary directory for packaging
+            pkg_dir="receivepay-${os}-${arch}"
+            mkdir -p "$pkg_dir"
+            
+            # Copy binary
+            cp "$bin_path" "$pkg_dir/"
+            
+            # Copy resources
+            cp -r conf static go.mod "$pkg_dir/"
+            
+            # Create archive
+            if [ "$os" == "windows" ]; then
+              zip -r "release-packages/${pkg_dir}.zip" "$pkg_dir"
+            else
+              tar -czf "release-packages/${pkg_dir}.tar.gz" "$pkg_dir"
+            fi
+            
+            # Clean up temp dir
+            rm -rf "$pkg_dir"
+          done
           
-          # Create a tarball for the release if desired, or just upload individual files.
-          # The original workflow tarred everything. Let's tar it to match the "package" concept.
-          # But wait, the original tarred "all-builds".
-          # Let's create a single tarball containing everything, as that seems to be the intent of "release-package".
-          
-          tar -czf release-package.tar.gz -C release-assets .
+          ls -R release-packages
           
           RELEASE_NOTES="## Auto Receive Crypto Pay
           
@@ -93,7 +119,7 @@ jobs:
           
           Instructions: https://github.com/HEUDavid/auto-receive-crypto-pay"
           
-          gh release create "$TAG_NAME" release-package.tar.gz \
+          gh release create "$TAG_NAME" release-packages/* \
             --title "Release $TAG_NAME" \
             --notes "$RELEASE_NOTES" \
             --draft=false
