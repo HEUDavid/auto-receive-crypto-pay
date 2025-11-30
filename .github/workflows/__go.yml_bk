@@ -1,0 +1,94 @@
+name: Go Cross-Platform Build and Release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [ linux, windows, darwin ]
+        goarch: [ amd64, arm64 ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.3'
+
+      - name: Build binaries
+        run: |
+          mkdir -p all-builds
+          for GOOS in linux windows darwin; do
+            for GOARCH in amd64 arm64; do
+              BINARY_NAME="receivepay-${GOOS}-${GOARCH}"
+              if [ "$GOOS" == "windows" ]; then
+                BINARY_NAME="${BINARY_NAME}.exe"
+              fi
+              echo "Building $BINARY_NAME ..."
+              GOOS=$GOOS GOARCH=$GOARCH go build -v -o all-builds/$BINARY_NAME ./cmd
+            done
+          done
+
+      - name: Copy conf/static/go.mod
+        run: |
+          cp -r conf static go.mod all-builds/ || true
+
+      - name: Package all builds
+        run: |
+          tar -czf release-package.tar.gz -C all-builds .
+          chmod +x all-builds/* || true
+
+      - name: Upload single artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # 加 github.run_id 保证同一次 workflow run 唯一
+          name: release-package-${{ github.run_id }}
+          path: release-package.tar.gz
+
+  create_release:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-package-${{ github.run_id }}
+          path: release-package
+          merge-multiple: true
+
+      - name: Extract package
+        run: |
+          mkdir -p release-package/all
+          tar -xzf release-package/release-package.tar.gz -C release-package/all
+
+      - name: Create Release
+        id: create_release
+        run: |
+          TAG_NAME=$(date +'v%Y.%m.%d-%H%M%S')
+          echo "Creating release $TAG_NAME"
+          RELEASE_NOTES="## Auto Receive Crypto Pay
+
+          ### Release $TAG_NAME
+
+          Instructions: https://github.com/HEUDavid/auto-receive-crypto-pay"
+
+          gh release create $TAG_NAME release-package/all/* \
+            --title "Release $TAG_NAME" \
+            --notes "$RELEASE_NOTES" \
+            --draft=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

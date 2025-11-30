@@ -115,7 +115,7 @@ jobs:
 
       - name: Create Release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG_NAME=$(date +'v%Y.%m.%d-%H%M%S')
           echo "Creating release $TAG_NAME"
