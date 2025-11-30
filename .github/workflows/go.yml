@@ -128,3 +128,4 @@ jobs:
             --title "Release $TAG_NAME" \
             --notes "$RELEASE_NOTES" \
             --draft=false
+
