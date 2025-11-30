@@ -73,40 +73,40 @@ jobs:
           for platform in "${platforms[@]}"; do
             os=$(echo $platform | cut -d'/' -f1)
             arch=$(echo $platform | cut -d'/' -f2)
-          
+
             # Construct binary name based on build job
             bin_name="receivepay-${os}-${arch}"
             if [ "$os" == "windows" ]; then
               bin_name="${bin_name}.exe"
             fi
-          
+
             # Find the binary file
             bin_path=$(find all-artifacts -name "$bin_name" -type f | head -n 1)
-          
+
             if [ -z "$bin_path" ]; then
               echo "Warning: Binary for $platform not found at $bin_name"
               continue
             fi
-          
+
             echo "Packaging $platform from $bin_path..."
-          
+
             # Create a temporary directory for packaging
             pkg_dir="receivepay-${os}-${arch}"
             mkdir -p "$pkg_dir"
-          
+
             # Copy binary
             cp "$bin_path" "$pkg_dir/"
-          
+
             # Copy resources
             cp -r conf static go.mod "$pkg_dir/"
-          
+
             # Create archive
             if [ "$os" == "windows" ]; then
               zip -r "release-packages/${pkg_dir}.zip" "$pkg_dir"
             else
               tar -czf "release-packages/${pkg_dir}.tar.gz" "$pkg_dir"
             fi
-          
+
             # Clean up temp dir
             rm -rf "$pkg_dir"
           done
@@ -130,4 +130,3 @@ jobs:
             --title "Release $TAG_NAME" \
             --notes "$RELEASE_NOTES" \
             --draft=false
-
