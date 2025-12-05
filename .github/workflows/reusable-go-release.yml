@@ -23,9 +23,9 @@ jobs:
       - name: Prepare Release Assets
         env:
           APP_NAME: ${{ inputs.app-name }}
-        run: ./.github/scripts/package-release.sh
+        run: ./.github/scripts/package-release.sh # 从all-artifacts获取bin 打包到release-packages
 
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./.github/scripts/create-release.sh
+        run: ./.github/scripts/create-release.sh # 发布release-packages/*
