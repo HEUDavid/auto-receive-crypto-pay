@@ -1,0 +1,31 @@
+name: Reusable Go Release
+
+on:
+  workflow_call:
+    inputs:
+      app-name:
+        required: true
+        type: string
+
+jobs:
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+
+      - name: Prepare Release Assets
+        env:
+          APP_NAME: ${{ inputs.app-name }}
+        run: ./.github/scripts/package-release.sh
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./.github/scripts/create-release.sh

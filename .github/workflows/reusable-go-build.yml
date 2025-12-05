@@ -1,0 +1,35 @@
+name: Reusable Go Build
+
+on:
+  workflow_call:
+    inputs:
+      app-name:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build ${{ matrix.goos }}/${{ matrix.goarch }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [ linux, windows, darwin ]
+        goarch: [ amd64, arm64 ]
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/go-build-steps
+        with:
+          app-name: ${{ inputs.app-name }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          go-version: '1.23.3'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: ${{ inputs.app-name }}-*
+          if-no-files-found: error

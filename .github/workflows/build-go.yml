@@ -1,0 +1,45 @@
+name: Go Cross-Platform Build and Release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  # -----------------------------------------------------------------------------
+  # Job: Setup
+  # Description: Defines global variables (APP_NAME) for downstream jobs.
+  # -----------------------------------------------------------------------------
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      app-name: ${{ steps.set-var.outputs.app-name }}
+    steps:
+      - id: set-var
+        run: echo "app-name=receivepay" >> $GITHUB_OUTPUT
+
+  # -----------------------------------------------------------------------------
+  # Job: Build
+  # Description: Calls reusable workflow to build binaries for multiple platforms.
+  # -----------------------------------------------------------------------------
+  call-build:
+    needs: setup
+    uses: ./.github/workflows/reusable-go-build.yml
+    with:
+      app-name: ${{ needs.setup.outputs.app-name }}
+
+  # -----------------------------------------------------------------------------
+  # Job: Release
+  # Description: Calls reusable workflow to package artifacts and create release.
+  # -----------------------------------------------------------------------------
+  call-release:
+    needs: [setup, call-build]
+    uses: ./.github/workflows/reusable-go-release.yml
+    with:
+      app-name: ${{ needs.setup.outputs.app-name }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'

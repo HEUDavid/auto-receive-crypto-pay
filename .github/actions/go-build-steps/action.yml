@@ -1,0 +1,32 @@
+name: 'Go Build Steps'
+description: 'Sets up Go and builds the binary'
+
+inputs:
+  app-name:
+    description: 'Application name'
+    required: true
+  go-version:
+    description: 'Go version to use'
+    required: true
+  goos:
+    description: 'Target OS'
+    required: true
+  goarch:
+    description: 'Target Architecture'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ inputs.go-version }}
+
+    - name: Build binary
+      shell: bash
+      env:
+        APP_NAME: ${{ inputs.app-name }}
+        GOOS: ${{ inputs.goos }}
+        GOARCH: ${{ inputs.goarch }}
+      run: ./.github/scripts/build.sh
