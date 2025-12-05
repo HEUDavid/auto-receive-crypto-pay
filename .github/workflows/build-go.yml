@@ -38,7 +38,7 @@ jobs:
   # Description: Calls reusable workflow to package artifacts and create release.
   # -----------------------------------------------------------------------------
   call-release:
-    needs: [setup, call-build]
+    needs: [ setup, call-build ]
     uses: ./.github/workflows/reusable-go-release.yml
     with:
       app-name: ${{ needs.setup.outputs.app-name }}
