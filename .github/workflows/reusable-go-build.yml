@@ -31,5 +31,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: binary-${{ matrix.goos }}-${{ matrix.goarch }}
-          path: ${{ inputs.app-name }}-*
+          path: ${{ inputs.app-name }}-* # Source 去哪里找文件传到云端
           if-no-files-found: error

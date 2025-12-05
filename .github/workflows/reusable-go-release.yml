@@ -18,7 +18,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: all-artifacts
+          path: all-artifacts # Destination 把云端的文件下载下来后，解压存放到哪里
 
       - name: Prepare Release Assets
         env:
