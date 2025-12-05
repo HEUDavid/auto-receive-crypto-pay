@@ -1,18 +1,18 @@
-name: 'Go Build Steps'
-description: 'Sets up Go and builds the binary'
+name: Go Build Steps
+description: Sets up Go and builds the binary
 
 inputs:
   app-name:
-    description: 'Application name'
+    description: Application name
     required: true
   go-version:
-    description: 'Go version to use'
+    description: Go version to use
     required: true
   goos:
-    description: 'Target OS'
+    description: Target OS
     required: true
   goarch:
-    description: 'Target Architecture'
+    description: Target Architecture
     required: true
 
 runs:
